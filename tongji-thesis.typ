@@ -2,10 +2,12 @@
 // The rules are based on the 2025-10 graduate thesis writing guide.
 
 #import "@preview/pointless-size:0.1.2": zh
+#import "@preview/itemize:0.2.0" as el
 
 #let fonts = (
   song: ("Times New Roman", "STSong", "Songti SC", "FZQingKeBenYueSongS"),
-  hei: ("Times New Roman", "Heiti SC", "STHeiti", "PingFang SC", "Microsoft YaHei"),
+  hei: ( "Hei", "STHeiti", "PingFang SC", "Microsoft YaHei"),
+  hei-cn: ("Hei", "STHeiti", "PingFang SC", "Microsoft YaHei"),
   fang: ("Times New Roman", "STFangsong", "Songti SC"),
   li: ("Libian SC", "Baoli SC", "Kaiti SC", "STKaiti"),
   kai: ("Times New Roman", "Kaiti SC", "STKaiti", "KaiTi"),
@@ -35,8 +37,8 @@
   compact-leading: _fixed-leading(size.wu, 16pt),
   cover-leading: 0pt,
   statement-leading: _fixed-leading(size.si, 18pt),
-  single-leading: 0pt,
-  body-spacing: 0pt,
+  single-leading: 0.65em,
+  body-spacing: 0.65em,
   compact-spacing: 0pt,
   statement-spacing: 0pt,
   no-spacing: 0pt,
@@ -72,6 +74,8 @@
   }
 }
 
+#let _chapter-state = state("chapter-number", 0)
+
 #let _heading-numbering(..nums) = {
   let nums = nums.pos()
   if nums.len() == 1 {
@@ -92,7 +96,7 @@
 }
 
 #let _heading-number-text(number) = {
-  text(font: fonts.en + fonts.hei, cjk-latin-spacing: none)[#number]
+  text(font: fonts.hei-cn, cjk-latin-spacing: none)[#number]
 }
 
 #let _heading-text(it) = {
@@ -105,16 +109,23 @@
   if prefix == none {
     it.body
   } else {
-    [#_heading-number-text(prefix)#h(1em)#it.body]
+    [#_heading-number-text(prefix)#h(0.3em)#it.body]
   }
 }
 
 #let _current-heading() = context {
-  let headings = query(selector(heading).before(here()))
+  let headings = query(selector(heading.where(level: 1)).before(here()))
   if headings.len() == 0 {
     []
   } else {
-    headings.last().body
+    let h = headings.last()
+    let nums = counter(heading).at(h.location())
+    let number = _format-heading-number(1, nums)
+    if h.numbering != none and number != [] {
+      [#number #h.body]
+    } else {
+      h.body
+    }
   }
 }
 
@@ -169,11 +180,12 @@
   )
   set cite(style: bibliography-style)
   set heading(numbering: _heading-numbering)
+  show: el.default-enum-list
   show heading.where(level: 1): it => {
     block(above: 24pt, below: 18pt, breakable: false, width: 100%)[
-      #set par(first-line-indent: rhythm.no-indent, leading: rhythm.single-leading, spacing: rhythm.no-spacing, justify: false)
+      #set par(first-line-indent: rhythm.no-indent, leading: rhythm.single-leading, spacing: rhythm.single-leading, justify: false)
       #align(center)[
-        #text(font: fonts.hei, size: size.san, weight: "bold", cjk-latin-spacing: none)[
+        #text(font: fonts.hei-cn, size: size.san, weight: "bold", cjk-latin-spacing: none)[
           #_heading-text(it)
         ]
       ]
@@ -182,22 +194,22 @@
 
   show heading.where(level: 2): it => {
     block(above: 24pt, below: 6pt, breakable: false, width: 100%)[
-      #set par(first-line-indent: rhythm.no-indent, leading: rhythm.single-leading, spacing: rhythm.no-spacing, justify: false)
-      #text(font: fonts.hei, size: size.xiaosan, cjk-latin-spacing: none)[#_heading-text(it)]
+      #set par(first-line-indent: rhythm.no-indent, leading: rhythm.single-leading, spacing: rhythm.single-leading, justify: false)
+      #text(font: fonts.hei-cn, size: size.xiaosan, cjk-latin-spacing: none)[#_heading-text(it)]
     ]
   }
 
   show heading.where(level: 3): it => {
     block(above: 12pt, below: 6pt, breakable: false, width: 100%)[
-      #set par(first-line-indent: rhythm.no-indent, leading: rhythm.single-leading, spacing: rhythm.no-spacing, justify: false)
-      #text(font: fonts.hei, size: size.si, cjk-latin-spacing: none)[#_heading-text(it)]
+      #set par(first-line-indent: rhythm.no-indent, leading: rhythm.single-leading, spacing: rhythm.single-leading, justify: false)
+      #text(font: fonts.hei-cn, size: size.si, cjk-latin-spacing: none)[#_heading-text(it)]
     ]
   }
 
   show heading.where(level: 4): it => {
     block(above: 12pt, below: 6pt, breakable: false, width: 100%)[
-      #set par(first-line-indent: rhythm.no-indent, leading: rhythm.single-leading, spacing: rhythm.no-spacing, justify: false)
-      #text(font: fonts.hei, size: size.xiaosi, cjk-latin-spacing: none)[#_heading-text(it)]
+      #set par(first-line-indent: rhythm.no-indent, leading: rhythm.single-leading, spacing: rhythm.single-leading, justify: false)
+      #text(font: fonts.hei-cn, size: size.xiaosi, cjk-latin-spacing: none)[#_heading-text(it)]
     ]
   }
 
@@ -284,7 +296,7 @@
 #let thesis-spine(info) = {
   set page(paper: "a4", margin: 0cm)
   [
-    #set par(first-line-indent: rhythm.no-indent, leading: rhythm.single-leading, spacing: rhythm.no-spacing, justify: false)
+    #set par(first-line-indent: rhythm.no-indent, leading: rhythm.single-leading, spacing: rhythm.single-leading, justify: false)
     #align(center + horizon)[
       #rect(width: 1.2cm, height: 27.5cm, stroke: 0.8pt + black)[
         #grid(
@@ -456,7 +468,15 @@
 
 #let chapter(title, body) = {
   pagebreak(weak: true)
-  _page-style(numbering: "1", header: title)[
+  // 先获取当前章节计数，然后+1作为新章节号
+  context {
+    let current-nums = counter(heading).get()
+    let new-chapter = if current-nums.len() > 0 { current-nums.at(0) + 1 } else { 1 }
+    _chapter-state.update(new-chapter)
+  }
+  _page-style(numbering: "1", header: context {
+    [第 #str(_chapter-state.get()) 章#h(1em)#title]
+  })[
     #heading(level: 1)[#title]
     #block(width: 100%)[#body]
   ]
@@ -484,7 +504,7 @@
   _page-style(numbering: "I", header: [Abstract], header-font: fonts.en)[
     #show heading.where(level: 1): it => {
       block(above: 24pt, below: 18pt, breakable: false, width: 100%)[
-        #set par(first-line-indent: rhythm.no-indent, leading: rhythm.single-leading, spacing: rhythm.no-spacing, justify: false)
+        #set par(first-line-indent: rhythm.no-indent, leading: rhythm.single-leading, spacing: rhythm.single-leading, justify: false)
         #align(center)[
           #text(font: fonts.arial, size: size.san, weight: "bold", cjk-latin-spacing: none)[
             #_heading-text(it)
