@@ -40,7 +40,7 @@ Quick Look thumbnails and the Typst output was checked by rendered PNG pages.
 | Chinese thesis type | Lishu 22pt bold centered, single spacing, 0.5-line before | `fonts.li`, `size.er`, cover faux-bold stroke, 8pt gap after logo | Matched visually |
 | Chinese degree type | Lishu 16pt bold centered, single spacing | `fonts.li`, `size.san`, cover faux-bold stroke | Matched visually |
 | Chinese title | Heiti 22pt bold centered, single spacing | `fonts.hei`, `size.er`, bold | Matched |
-| Chinese metadata | Fangsong 16pt, single spacing, 4.5-character indent, label text distributed/aligned | `fonts.fang`, `size.san`; left pad `4.5em`, fixed 7-cell label grid, aligned colon/value columns | Matched visually |
+| Chinese metadata | Fangsong 16pt, single spacing, 4.5-character indent, label text distributed/aligned | `fonts.fang`, `size.san`; single-column metadata block, left pad `4.5em`; labels up to 4 chars distributed across `4em`, long labels natural width | Matched visually |
 | Chinese date | Songti 16pt centered | `fonts.song`, `size.san` | Matched |
 | English title | Arial 18pt bold centered | `fonts.arial`, `size.xiaoer`, bold | Matched |
 | English metadata | Times New Roman 16pt | `fonts.en`, `size.san` | Matched |

@@ -229,43 +229,37 @@
 }
 
 #let _spread-label(label) = {
-  let slots = if label == "姓名" {
-    ("姓", "", "", "", "", "名", "：")
-  } else if label == "学号" {
-    ("学", "", "", "", "", "号", "：")
-  } else if label == "学院" {
-    ("学", "", "", "", "", "院", "：")
-  } else if label == "学科门类" {
-    ("学", "", "科", "门", "", "类", "：")
-  } else if label == "一级学科" {
-    ("一", "", "级", "学", "", "科", "：")
-  } else if label == "二级学科" {
-    ("二", "", "级", "学", "", "科", "：")
-  } else if label == "研究方向" {
-    ("研", "", "究", "方", "", "向", "：")
-  } else if label == "指导教师" {
-    ("指", "", "导", "教", "", "师", "：")
-  } else if label == "联合培养单位" {
-    ("联", "合", "培", "养", "单", "位", "：")
+  let chars = str(label).clusters()
+  let label-body = if chars.len() <= 4 {
+    let columns = ()
+    let cells = ()
+    for (index, char) in chars.enumerate() {
+      columns.push(auto)
+      cells.push(text(font: fonts.fang, size: size.san)[#char])
+      if index < chars.len() - 1 {
+        columns.push(1fr)
+        cells.push([])
+      }
+    }
+    box(width: 6em)[
+      #grid(
+        columns: columns,
+        column-gutter: 0pt,
+        align: horizon,
+        ..cells
+      )
+    ]
   } else {
-    (label, "", "", "", "", "", "：")
+    text(font: fonts.fang, size: size.san)[#label]
   }
 
-  box(width: 7em)[
-    #grid(
-      columns: (1em, 1em, 1em, 1em, 1em, 1em, 1em),
-      column-gutter: 0pt,
-      align: center,
-      ..slots.map(cell => text(font: fonts.fang, size: size.san)[#cell])
-    )
-  ]
+  [#label-body#text(font: fonts.fang, size: size.san)[：]]
 }
 
-#let _metadata-row(label, value) = {
-  (
-    _spread-label(label),
-    align(left)[#text(font: fonts.fang, size: size.san)[#value]],
-  )
+#let _metadata-line(label, value) = {
+  block(width: 100%)[
+    #_spread-label(label)#text(font: fonts.fang, size: size.san)[#value]
+  ]
 }
 
 #let _cover-strong(font, size, body) = {
@@ -346,26 +340,27 @@
       ]
     ]
 
-    #v(2.2cm)
-    #pad(left: 4.5em)[
-      #grid(
-        columns: (7em, 8.5cm),
-        rows: auto,
-        column-gutter: 0.5em,
-        row-gutter: 0.34cm,
-        align: horizon,
-        ..(
-          _metadata-row("姓名", _get(info, "author")),
-          _metadata-row("学号", _get(info, "student_id")),
-          _metadata-row("学院", _get(info, "school")),
-          _metadata-row("学科门类", _get(info, "discipline_category")),
-          _metadata-row("一级学科", _get(info, "first_level_discipline")),
-          _metadata-row("二级学科", _get(info, "second_level_discipline")),
-          _metadata-row("研究方向", _get(info, "research_direction")),
-          _metadata-row("指导教师", _get(info, "supervisor")),
-          _metadata-row("联合培养单位", _get(info, "joint_training")),
-        ).flatten()
-      )
+    #v(4cm)
+    #align(center)[
+      #block(width: 15.8cm)[
+        #pad(left: 8.5em)[
+          #grid(
+            columns: (100%,),
+            rows: auto,
+            row-gutter: 0.42cm,
+            align: left + horizon,
+            _metadata-line("姓名", _get(info, "author")),
+            _metadata-line("学号", _get(info, "student_id")),
+            _metadata-line("学院", _get(info, "school")),
+            _metadata-line("学科门类", _get(info, "discipline_category")),
+            _metadata-line("一级学科", _get(info, "first_level_discipline")),
+            _metadata-line("二级学科", _get(info, "second_level_discipline")),
+            _metadata-line("研究方向", _get(info, "research_direction")),
+            _metadata-line("指导教师", _get(info, "supervisor")),
+            _metadata-line("联合培养单位", _get(info, "joint_training")),
+          )
+        ]
+      ]
     ]
 
     #v(1fr)
@@ -777,14 +772,14 @@
     ]
 
   
-    #v(1em)
+    #v(2em)
     #set par(first-line-indent: rhythm.no-indent, leading: rhythm.declaration-leading, spacing: rhythm.no-spacing, justify: false)
     #pad(left: 2em)[
-      #set text(font: fonts.song, size: size.si, weight: “bold”)
+      #set text(font: fonts.song, size: size.si, weight: "bold")
       本学位论文属于（在以下方框内打”√”）：
-      #v(rhythm.declaration-v-spacing)
+      #v(rhythm.declaration-leading)
       □ 保密，在 #box(width: 3em, stroke: (bottom: 0.5pt)) 年解密后适用本授权书。
-      #v(rhythm.declaration-v-spacing)
+      #v(rhythm.declaration-leading)
       □ 不保密。
     ]
 
@@ -794,9 +789,10 @@
       columns: (1fr, 1fr),
       rows: auto,
       column-gutter: 3em,
-      row-gutter: 0.36cm,
+      row-gutter: rhythm.declaration-leading,
       text(font: fonts.song, size: size.si, weight: "bold")[学位论文作者签名：],
       text(font: fonts.song, size: size.si, weight: "bold")[指导教师签名：],
+      
       text(font: fonts.song, size: size.si, weight: "bold")[日期：#h(2em)年#h(2em)月#h(2em)日],
       text(font: fonts.song, size: size.si, weight: "bold")[日期：#h(2em)年#h(2em)月#h(2em)日],
     )
