@@ -76,6 +76,5 @@
     [1] XX，XX. 城市用地功能识别方法研究[J]. 城市规划学刊，2026.
   ]
 
-  #originality-statement(thesis-info)
-  #copyright-authorization()
+  #declaration-statements(thesis-info)
 ]
