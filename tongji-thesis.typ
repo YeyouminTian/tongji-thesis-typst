@@ -5,7 +5,7 @@
 #import "@preview/itemize:0.2.0" as el
 
 #let fonts = (
-  song: ("Times New Roman", "STSong", "Songti SC", "FZQingKeBenYueSongS"),
+  song: ("Songti SC", "Times New Roman", "STSong", "FZQingKeBenYueSongS"),
   hei: ( "Hei", "STHeiti", "PingFang SC", "Microsoft YaHei"),
   hei-cn: ("Hei", "STHeiti", "PingFang SC", "Microsoft YaHei"),
   fang: ("Times New Roman", "STFangsong", "Songti SC"),
@@ -185,7 +185,7 @@
     block(above: 24pt, below: 18pt, breakable: false, width: 100%)[
       #set par(first-line-indent: rhythm.no-indent, leading: rhythm.single-leading, spacing: rhythm.single-leading, justify: false)
       #align(center)[
-        #text(font: fonts.hei-cn, size: size.san, weight: "bold", cjk-latin-spacing: none)[
+        #text(font: fonts.hei-cn, size: size.san, stroke: 0.4pt, cjk-latin-spacing: none)[
           #_heading-text(it)
         ]
       ]
@@ -337,7 +337,7 @@
     #align(center)[
       #block(width: 13.8cm)[
         #align(center)[
-          #text(font: fonts.hei, size: size.er, weight: "bold")[
+          #text(font: fonts.hei, size: size.er, stroke: 0.4pt)[
             #_get(info, "title", default: "中文论文题目")
           ]
         ]
@@ -484,7 +484,7 @@
 
 #let abstract-cn(keywords: (), body) = {
   _page-style(numbering: "I", header: [摘要])[
-    #heading(numbering: none, outlined: true)[摘要]
+    #heading(numbering: none, outlined: false)[摘要]
     #set par(
       justify: true,
       first-line-indent: rhythm.body-indent,
@@ -494,7 +494,7 @@
     #block(width: 100%)[#body]
     #parbreak()
     #set par(first-line-indent: rhythm.no-indent, leading: rhythm.body-leading, spacing: rhythm.no-spacing)
-    #text(font: fonts.song, size: size.xiaosi, weight: "bold")[关键词：]
+    #text(font: fonts.song, size: size.xiaosi, stroke: 0.5pt)[关键词：]
     #text(font: fonts.song, size: size.xiaosi)[#_joined(keywords)]
     #pagebreak()
   ]
@@ -512,7 +512,7 @@
         ]
       ]
     }
-    #heading(numbering: none, outlined: true)[Abstract]
+    #heading(numbering: none, outlined: false)[ABSTRACT]
     #set text(font: fonts.en, size: size.xiaosi, lang: "en")
     #set par(
       first-line-indent: rhythm.no-indent,
@@ -570,8 +570,7 @@
     block(width: 100%, above: 0pt, below: 0pt)[
       #h(indent)
       #if heading-number != [] {
-        link(el.location(), heading-number)
-        h(1em)
+        link(el.location(), [ ] + heading-number + [ ])
       }
       #link(el.location(), el.body)
       #box(width: 1fr, h(0.25em) + box(width: 1fr, repeat[·#h(1pt)]) + h(0.25em))
@@ -591,7 +590,7 @@
 
 #let symbols(entries: (), body: none) = {
   _page-style(numbering: "I", header: [符号说明])[
-    #heading(numbering: none, outlined: true)[符号说明]
+    #heading(numbering: none, outlined: false)[符号说明]
     #set text(font: fonts.song + fonts.en, size: size.wu)
     #set par(
       first-line-indent: rhythm.no-indent,
@@ -664,7 +663,7 @@
   block(width: 100%, above: 0pt, below: 16pt, breakable: false)[
     #set par(first-line-indent: rhythm.no-indent, leading: rhythm.single-leading, spacing: rhythm.no-spacing)
     #align(center)[
-      #text(font: fonts.hei, size: size.xiaoer, weight: "bold")[#title]
+      #text(font: fonts.hei, size: size.xiaoer, stroke: 0.4pt)[#title]
     ]
   ]
 }
@@ -732,9 +731,9 @@
 
     #v(1.2cm)
     #set par(first-line-indent: rhythm.no-indent, leading: rhythm.statement-leading, spacing: rhythm.no-spacing)
-    #align(right)[#text(font: fonts.song, size: size.si, weight: "bold")[学位论文作者签名：#h(6em)]]
+    #align(right)[#text(font: fonts.song, size: size.si, stroke: 0.5pt)[学位论文作者签名：#h(6em)]]
     #v(0.4cm)
-    #align(right)[#text(font: fonts.song, size: size.si, weight: "bold")[日期：#h(2em)年#h(2em)月#h(2em)日]]
+    #align(right)[#text(font: fonts.song, size: size.si, stroke: 0.5pt)[日期：#h(2em)年#h(2em)月#h(2em)日]]
   ]
 }
 
@@ -764,10 +763,10 @@
       rows: auto,
       column-gutter: 3em,
       row-gutter: 0.45cm,
-      text(font: fonts.song, size: size.si, weight: "bold")[学位论文作者签名：],
-      text(font: fonts.song, size: size.si, weight: "bold")[指导教师签名：],
-      text(font: fonts.song, size: size.si, weight: "bold")[日期：#h(2em)年#h(2em)月#h(2em)日],
-      text(font: fonts.song, size: size.si, weight: "bold")[日期：#h(2em)年#h(2em)月#h(2em)日],
+      text(font: fonts.song, size: size.si, stroke: 0.5pt)[学位论文作者签名：],
+      text(font: fonts.song, size: size.si, stroke: 0.5pt)[指导教师签名：],
+      text(font: fonts.song, size: size.si, stroke: 0.5pt)[日期：#h(2em)年#h(2em)月#h(2em)日],
+      text(font: fonts.song, size: size.si, stroke: 0.5pt)[日期：#h(2em)年#h(2em)月#h(2em)日],
     )
   ]
 }
