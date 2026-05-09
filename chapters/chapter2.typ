@@ -1,4 +1,4 @@
-#import "../tongji-thesis.typ": chapter, table-caption
+#import "../lib.typ": chapter, table-caption
 
 #chapter[模板样式示例][
 

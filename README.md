@@ -45,7 +45,27 @@ University graduate thesis writing guide and reference example.
 - `thesis.typ`: sample thesis entry point.
 - `metadata.typ`: thesis metadata such as title, author, school, supervisor,
   discipline, and date.
-- `tongji-thesis.typ`: reusable Typst template functions and style rules.
+- `lib.typ`: public template API. New documents and chapter files should import
+  from this file.
+- `tongji-thesis.typ`: compatibility facade that re-exports `lib.typ` for older
+  documents.
+- `utils/`: reusable low-level helpers.
+  - `typography.typ`: font stacks, Chinese字号, rhythm, line-height constants,
+    and bibliography style.
+  - `metadata.typ`: metadata lookup and text joining helpers.
+  - `heading.typ`: heading numbering, current-heading lookup, and chapter state.
+  - `text.typ`: cover label spreading, emphasized cover text, and vertical text.
+  - `caption.typ`: figure and table caption helpers.
+- `layouts/`: document structure and layout rules.
+  - `document.typ`: global `tongji-thesis` show rule and page style.
+  - `matter.typ`: front matter, main matter, back matter, and chapter wrapper.
+  - `declarations.typ`: originality and copyright declaration layouts.
+- `pages/`: concrete page templates.
+  - `cover.typ`: Chinese cover, English cover, and spine.
+  - `abstract.typ`: Chinese and English abstracts.
+  - `outline.typ`: custom table of contents.
+  - `symbols.typ`: symbol explanation page.
+  - `backmatter.typ`: references, appendix, acknowledgements, and CV pages.
 - `references.bib`: sample bibliography database used by the GB/T 7714
   reference list.
 - `FORMAT-AUDIT.md`: element-by-element comparison between the guide, DOCX
@@ -56,6 +76,23 @@ University graduate thesis writing guide and reference example.
   10.0cm x 2.6cm logo image extracted from the graduate thesis reference DOCX.
 - `scripts/build.sh`: local build script. It uses `typst` from PATH first, then
   falls back to `/Users/tianye/Downloads/typst-aarch64-apple-darwin/typst`.
+
+## Importing the Template
+
+Use `lib.typ` for new files:
+
+```typst
+#import "lib.typ": *
+```
+
+Chapter files should import only what they use, for example:
+
+```typst
+#import "../lib.typ": chapter, figure-caption
+```
+
+When changing styles, edit the layered source files under `utils/`, `layouts/`,
+or `pages/`. `tongji-thesis.typ` is only a compatibility facade.
 
 ## Build
 

@@ -1,4 +1,4 @@
-#import "tongji-thesis.typ": *
+#import "lib.typ": *
 #import "metadata.typ": thesis-info
 
 #show: body => tongji-thesis(info: thesis-info)[#body]
