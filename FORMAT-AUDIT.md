@@ -60,10 +60,10 @@ Quick Look thumbnails and the Typst output was checked by rendered PNG pages.
 | Element | Reference Requirement | Typst Implementation | Status |
 | --- | --- | --- | --- |
 | Chinese abstract title | Heiti 16pt bold centered, 24pt before, 18pt after | level 1 heading rule | Matched |
-| Chinese abstract body | Songti 12pt, first-line indent 2 chars, 20pt line height, before/after 0pt | `fonts.song + fonts.en`, `size.xiaosi`, `body-indent`, `body-leading: 8pt`, `body-spacing: 0pt` | Matched |
+| Chinese abstract body | Songti 12pt, first-line indent 2 chars, 20pt line height, before/after 0pt | `fonts.song + fonts.en`, `size.xiaosi`, `body-indent`, fixed text edges, `body-leading: 8pt`, `body-spacing: 8pt` so cross-paragraph baselines stay 20pt apart | Matched |
 | Chinese keywords | Songti 12pt, label bold | explicit bold label and normal keyword text | Matched |
 | English abstract title | Arial 16pt bold centered, 24pt before, 18pt after | local level 1 heading rule with Arial display and plain outline text | Matched |
-| English abstract body | Times New Roman 12pt, 20pt line height, before/after 0pt | `fonts.en`, `size.xiaosi`, `body-leading: 8pt`, `body-spacing: 0pt` | Matched |
+| English abstract body | Times New Roman 12pt, 20pt line height, before/after 0pt | `fonts.en`, `size.xiaosi`, fixed text edges, `body-leading: 8pt`, `body-spacing: 8pt` so cross-paragraph baselines stay 20pt apart | Matched |
 | English keywords | Times New Roman 12pt, label bold | explicit bold label and normal keyword text | Matched |
 | TOC title | Heiti 16pt bold centered, 24pt before, 18pt after | level 1 heading rule | Matched |
 | TOC entries | Songti 12pt, 18pt line height, page numbers right aligned, before/after 0pt | custom outline, `toc-leading: 6pt`, no extra block gap | Matched |
@@ -76,13 +76,13 @@ Quick Look thumbnails and the Typst output was checked by rendered PNG pages.
 | Element | Reference Requirement | Typst Implementation | Status |
 | --- | --- | --- | --- |
 | Chapter title | Heiti 16pt bold centered, 24pt before, 18pt after | level 1 heading rule | Matched |
-| First-level heading | Heiti 15pt, 24pt before, 6pt after | level 2 heading rule | Matched |
-| Second-level heading | Heiti 14pt, 12pt before, 6pt after | level 3 heading rule | Matched |
-| Third-level heading | Heiti 12pt, 12pt before, 6pt after | level 4 heading rule | Matched |
+| First-level heading | Heiti 15pt, single spacing, 24pt before, 18pt after | level 2 heading rule | Matched |
+| Second-level heading | Heiti 14pt, single spacing, 24pt before, 18pt after | level 3 heading rule | Matched |
+| Third-level heading | Heiti 12pt, single spacing, 24pt before, 18pt after | level 4 heading rule | Matched |
 | Heading number gap | one character between number and title; no automatic CJK/Latin spacing inside the number | manual heading-number strings, dedicated Heiti number text, `cjk-latin-spacing: none`, then `h(1em)` | Matched |
 | Body paragraph | Songti/TNR 12pt, justified, first-line indent 2 chars | global `set text`, `set par`, `body-indent` | Matched |
-| Body line height | Word fixed 20pt | Typst uses `body-leading: 8pt` for 12pt text, i.e. 20pt baseline rhythm | Matched |
-| Paragraph boundary | Word before/after 0pt | Typst uses `body-spacing: 0pt` | Matched |
+| Body line height | Word fixed 20pt | Typst fixes text edges to `0.7em/-0.3em` and uses `body-leading: 8pt` for 12pt text, i.e. 20pt baseline rhythm | Matched |
+| Paragraph boundary | Word before/after 0pt | Typst uses `body-spacing: body-leading`; this is not extra Word paragraph spacing, it keeps the paragraph boundary on the same 20pt baseline rhythm as normal line breaks | Matched |
 | Figure caption | Songti 10.5pt centered, 6pt before, 12pt after | `figure-caption()` block | Matched |
 | Table caption | Songti 10.5pt centered, 6pt before, 6pt after | `table-caption()` block | Matched |
 
@@ -103,9 +103,10 @@ Quick Look thumbnails and the Typst output was checked by rendered PNG pages.
 ## Notes
 
 - Typst `leading` and paragraph `spacing` are not identical to Word's fixed
-  line height and before/after settings. Following the Typst Word migration
-  guide, fixed line height is implemented as `leading = line height - font size`;
-  Word paragraph before/after `0pt` is implemented as `par.spacing: 0pt`.
+  line height and before/after settings. Fixed line height is implemented as
+  `leading = line height - font size`; Word paragraph before/after `0pt` is
+  implemented by keeping the same baseline rhythm across paragraph boundaries,
+  so body `par.spacing` equals body `par.leading`.
 - The reference list can be generated from BibTeX/BibLaTeX through Typst
   `bibliography(..., style: "gb-7714-2015-numeric")`, while the previous manual
   `items` fallback remains available for small static lists.

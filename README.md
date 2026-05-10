@@ -25,12 +25,17 @@ University graduate thesis writing guide and reference example.
 - Page numbers: front matter uses uppercase Roman numerals; main text starts
   from chapter 1 with Arabic numerals.
 - Body text: Songti, small fourth size, justified, first-line indent 2 Chinese
-  characters, fixed line height 20pt, no before/after paragraph spacing.
+  characters, fixed line height 20pt. Paragraph boundaries keep the same 20pt
+  baseline rhythm as normal line breaks, with no additional Word-style
+  before/after paragraph spacing.
 - Chapter title: Heiti, third size, bold, centered, single line spacing,
   24pt before and 18pt after.
-- First-level heading: Heiti, small third size, 24pt before and 6pt after.
-- Second-level heading: Heiti, fourth size, 12pt before and 6pt after.
-- Third-level heading: Heiti, small fourth size, 12pt before and 6pt after.
+- First-level heading: Heiti, small third size, single line spacing, 24pt
+  before and 18pt after.
+- Second-level heading: Heiti, fourth size, single line spacing, 24pt before
+  and 18pt after.
+- Third-level heading: Heiti, small fourth size, single line spacing, 24pt
+  before and 18pt after.
 - Figure captions: below figures, Songti fifth size, centered, 6pt before and
   12pt after.
 - Table captions: above tables, Songti fifth size, centered, 6pt before and

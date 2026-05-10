@@ -25,7 +25,7 @@
   page-style(numbering: "I", header: [Abstract], header-font: fonts.en)[
     #show heading.where(level: 1): it => {
       block(above: 24pt, below: 18pt, breakable: false, width: 100%)[
-        #set par(first-line-indent: rhythm.no-indent, leading: rhythm.single-leading, spacing: rhythm.single-leading, justify: false)
+        #set par(first-line-indent: rhythm.no-indent, leading: rhythm.heading-leading, spacing: rhythm.no-spacing, justify: false)
         #align(center)[
           #text(font: fonts.arial, size: size.san, weight: "bold", cjk-latin-spacing: none)[
             #heading-text(it)

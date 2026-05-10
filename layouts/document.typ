@@ -42,8 +42,8 @@
     size: size.xiaosi,
     lang: "zh",
     region: "cn",
-    top-edge: "ascender",
-    bottom-edge: "descender",
+    top-edge: 0.7em,
+    bottom-edge: -0.3em,
     cjk-latin-spacing: none,
   )
   set par(
@@ -57,7 +57,7 @@
   show: el.default-enum-list
   show heading.where(level: 1): it => {
     block(above: 24pt, below: 18pt, breakable: false, width: 100%)[
-      #set par(first-line-indent: rhythm.no-indent, leading: rhythm.single-leading, spacing: rhythm.single-leading, justify: false)
+      #set par(first-line-indent: rhythm.no-indent, leading: rhythm.heading-leading, spacing: rhythm.no-spacing, justify: false)
       #align(center)[
         #text(font: fonts.hei-cn, size: size.san, stroke: 0.2pt, cjk-latin-spacing: none)[
           #heading-text(it)
@@ -67,22 +67,22 @@
   }
 
   show heading.where(level: 2): it => {
-    block(above: 24pt, below: 6pt, breakable: false, width: 100%)[
-      #set par(first-line-indent: rhythm.no-indent, leading: rhythm.single-leading, spacing: rhythm.single-leading, justify: false)
+    block(above: 24pt, below: 18pt, breakable: false, width: 100%)[
+      #set par(first-line-indent: rhythm.no-indent, leading: rhythm.heading-leading, spacing: rhythm.no-spacing, justify: false)
       #text(font: fonts.hei-cn, size: size.xiaosan, cjk-latin-spacing: none)[#heading-text(it)]
     ]
   }
 
   show heading.where(level: 3): it => {
-    block(above: 12pt, below: 6pt, breakable: false, width: 100%)[
-      #set par(first-line-indent: rhythm.no-indent, leading: rhythm.single-leading, spacing: rhythm.single-leading, justify: false)
+    block(above: 24pt, below: 18pt, breakable: false, width: 100%)[
+      #set par(first-line-indent: rhythm.no-indent, leading: rhythm.heading-leading, spacing: rhythm.no-spacing, justify: false)
       #text(font: fonts.hei-cn, size: size.si, cjk-latin-spacing: none)[#heading-text(it)]
     ]
   }
 
   show heading.where(level: 4): it => {
-    block(above: 12pt, below: 6pt, breakable: false, width: 100%)[
-      #set par(first-line-indent: rhythm.no-indent, leading: rhythm.single-leading, spacing: rhythm.single-leading, justify: false)
+    block(above: 24pt, below: 18pt, breakable: false, width: 100%)[
+      #set par(first-line-indent: rhythm.no-indent, leading: rhythm.heading-leading, spacing: rhythm.no-spacing, justify: false)
       #text(font: fonts.hei-cn, size: size.xiaosi, cjk-latin-spacing: none)[#heading-text(it)]
     ]
   }
