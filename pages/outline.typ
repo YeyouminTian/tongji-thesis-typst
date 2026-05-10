@@ -1,5 +1,5 @@
 #import "../layouts/document.typ": page-style
-#import "../utils/typography.typ": rhythm
+#import "../utils/typography.typ": fonts, size, rhythm
 #import "../utils/heading.typ": format-heading-number
 
 #let outline(depth: 3) = context {
@@ -42,12 +42,14 @@
     }
 
     block(width: 100%, above: 0pt, below: 0pt)[
+      #set text(font: fonts.song + fonts.en, size: size.xiaosi, top-edge: 0.7em, bottom-edge: -0.3em)
+      #set par(first-line-indent: rhythm.no-indent, leading: rhythm.toc-leading, spacing: rhythm.no-spacing, justify: false)
       #h(indent)
       #if heading-number != [] {
         link(el.location(), [ ] + heading-number + [ ])
       }
       #link(el.location(), el.body)
-      #box(width: 1fr, h(0.25em) + box(width: 1fr, repeat[·#h(1pt)]) + h(0.25em))
+      #box(width: 1fr, inset: (x: 0.25em), repeat([.], gap: 0.15em))
       #link(el.location(), page-label)
     ]
   }
