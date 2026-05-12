@@ -39,9 +39,14 @@ University graduate thesis writing guide and reference example.
 - Figure captions: below figures, Songti fifth size, centered, 6pt before and
   12pt after.
 - Table captions: above tables, Songti fifth size, centered, 6pt before and
-  6pt after.
-- References: Songti fifth size, hanging indent 2 characters, line height 16pt,
-  GB/T 7714 numeric bibliography style.
+  12pt after.
+- Distances between body text and figure/table components are additive: the
+  normal body paragraph rhythm is retained and caption before/after spacing is
+  added on top of it.
+- References: title in bold Heiti third size, centered with single spacing, 24pt
+  before and 18pt after; entries in Songti/Times New Roman fifth size, hanging
+  indent 2 characters, 16pt line height, and adjacent entries kept on the same
+  Word-style 16pt line rhythm, GB/T 7714 numeric bibliography style.
 - Acknowledgements: FangSong small fourth size, justified, first-line indent
   2 characters, line height 20pt.
 
@@ -60,7 +65,8 @@ University graduate thesis writing guide and reference example.
   - `metadata.typ`: metadata lookup and text joining helpers.
   - `heading.typ`: heading numbering, current-heading lookup, and chapter state.
   - `text.typ`: cover label spreading, emphasized cover text, and vertical text.
-  - `caption.typ`: figure and table caption helpers.
+  - `caption.typ`: legacy caption helpers retained for compatibility; new
+    content should use Typst `figure(...)` syntax.
 - `layouts/`: document structure and layout rules.
   - `document.typ`: global `tongji-thesis` show rule and page style.
   - `matter.typ`: front matter, main matter, back matter, and chapter wrapper.
@@ -93,7 +99,7 @@ Use `lib.typ` for new files:
 Chapter files should import only what they use, for example:
 
 ```typst
-#import "../lib.typ": chapter, figure-caption
+#import "../lib.typ": chapter
 ```
 
 When changing styles, edit the layered source files under `utils/`, `layouts/`,
@@ -116,17 +122,19 @@ The script compiles `thesis.typ` to `thesis.pdf`.
 - Table of contents.
 - Symbol table.
 - Main matter with chapter headings.
-- Table and figure caption helper functions.
+- Automatic chapter-aware numbering for figures, tables, and block equations.
+- Native Typst `figure(...)` syntax for images and graphics, and
+  `figure(table(...), caption: ...)` for tables.
 - References, appendix, acknowledgements, CV/publications, originality
   statement, and copyright authorization.
 - BibTeX/BibLaTeX bibliography input via `#references(bib: "references.bib")`,
   using Typst's `gb-7714-2015-numeric` style. The manual `items` fallback is
   still supported.
 
-Known limitation: figure, table, and formula numbering helpers are currently
-manual in the sample document. If the final thesis contains many figures,
-tables, or formulas, these should be upgraded to automatic chapter-aware
-numbering helpers.
+Figures, tables, and formulas are labeled without prefixes at the definition
+site, for example `<tech-route>` or `<format-params>`. References use the
+auto-generated prefixes from `i-figured`: `@fig:tech-route`,
+`@tbl:format-params`, and `@eqt:example-model`.
 
 ## Technology Recommendation
 

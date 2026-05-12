@@ -83,15 +83,16 @@ Quick Look thumbnails and the Typst output was checked by rendered PNG pages.
 | Body paragraph | Songti/TNR 12pt, justified, first-line indent 2 chars | global `set text`, `set par`, `body-indent` | Matched |
 | Body line height | Word fixed 20pt | Typst fixes text edges to `0.7em/-0.3em` and uses `body-leading: 8pt` for 12pt text, i.e. 20pt baseline rhythm | Matched |
 | Paragraph boundary | Word before/after 0pt | Typst uses `body-spacing: body-leading`; this is not extra Word paragraph spacing, it keeps the paragraph boundary on the same 20pt baseline rhythm as normal line breaks | Matched |
-| Figure caption | Songti 10.5pt centered, 6pt before, 12pt after | `figure-caption()` block | Matched |
-| Table caption | Songti 10.5pt centered, 6pt before, 6pt after | `table-caption()` block | Matched |
+| Figure caption | Songti 10.5pt centered, 6pt before, 12pt after, one-character gap between number and title | native `figure(...)` with `i-figured`; component-to-body spacing is additive with `body-spacing` | Matched |
+| Table caption | Songti 10.5pt centered, 6pt before, 12pt after, one-character gap between number and title | `figure(table(...), caption: ...)`; body-to-caption spacing is `body-spacing + 6pt`, caption-to-table gap is 12pt | Matched |
+| Equation numbering | Formula centered, number right aligned and chapter-aware | block math equations are handled by `i-figured.show-equation` | Matched |
 
 ## Back Matter
 
 | Element | Reference Requirement | Typst Implementation | Status |
 | --- | --- | --- | --- |
-| References title | same as chapter title | level 1 heading rule | Matched |
-| Reference body | Songti/TNR 10.5pt, hanging indent 2 chars, 16pt line height, before/after 0pt | `size.wu`, `hanging-indent: 2em`, `compact-leading: 5.5pt`, `compact-spacing: 0pt`; supports `.bib` with `gb-7714-2015-numeric` | Matched |
+| References title | Heiti 16pt bold centered, single spacing, 24pt before, 18pt after | local reference heading rule in `references()` | Matched |
+| Reference body | Songti/TNR 10.5pt, hanging indent 2 chars, 16pt line height; adjacent entries use the same Word-style 16pt line rhythm | `size.wu`, `hanging-indent: 2em`, `compact-leading: 5.5pt`; reference paragraph/block spacing also uses `compact-leading` so paragraph boundaries keep the same 16pt baseline rhythm; supports `.bib` with `gb-7714-2015-numeric` | Matched |
 | Appendix body | same as main body | inherits global body settings | Matched |
 | Acknowledgements title | same as chapter title | level 1 heading rule | Matched |
 | Acknowledgements body | Fangsong 12pt, first-line indent 2 chars, 20pt line height | `fonts.fang`, `size.xiaosi`, body paragraph rhythm | Matched visually |
@@ -116,5 +117,5 @@ Quick Look thumbnails and the Typst output was checked by rendered PNG pages.
 - The Word sample contains some direct formatting that differs slightly from
   the guide in declaration pages. The template currently follows the guide for
   those pages and keeps the layout editable.
-- Figure, table, and formula numbering are still manual helpers in the sample.
-  They can be upgraded later to automatic chapter-aware counters.
+- Figure, table, and formula numbering use `i-figured`, following the structure
+  of `modern-nju-thesis` while retaining Tongji caption and equation formatting.

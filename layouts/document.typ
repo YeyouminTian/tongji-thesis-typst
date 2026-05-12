@@ -1,4 +1,5 @@
 #import "@preview/itemize:0.2.0" as el
+#import "@preview/i-figured:0.2.4" as i-figured
 #import "../utils/typography.typ": fonts, size, rhythm, bibliography-style
 #import "../utils/metadata.typ": get
 #import "../utils/heading.typ": current-heading, heading-numbering, heading-text
@@ -55,6 +56,38 @@
   set cite(style: bibliography-style)
   set heading(numbering: heading-numbering)
   show: el.default-enum-list
+  show heading: i-figured.reset-counters
+  show math.equation.where(block: true): i-figured.show-equation
+  set figure(gap: 6pt)
+  show figure.where(kind: table): set figure(gap: 12pt)
+  show figure.where(kind: table): set figure.caption(position: top)
+  set figure.caption(separator: h(1em))
+
+  let _auto-figure-kind(kind) = type(kind) == str and kind.starts-with("i-figured-")
+  let _figure-kind-name(kind) = if type(kind) == str { kind } else { repr(kind) }
+  let _caption-before = 6pt
+  let _caption-after = 12pt
+
+  show figure: it => {
+    if _auto-figure-kind(it.kind) {
+      it
+    } else {
+      let kind-name = _figure-kind-name(it.kind)
+      block(
+        width: 100%,
+        above: rhythm.body-spacing + if kind-name == "table" { _caption-before } else { 0pt },
+        below: rhythm.body-spacing + if kind-name == "table" { 0pt } else { _caption-after },
+      )[
+        #i-figured.show-figure(it)
+      ]
+    }
+  }
+
+  show figure.caption: it => {
+    set par(first-line-indent: rhythm.no-indent, leading: rhythm.single-leading, spacing: rhythm.no-spacing)
+    align(center)[#text(font: fonts.song + fonts.en, size: size.wu)[#it]]
+  }
+
   show heading.where(level: 1): it => {
     block(above: 24pt, below: 18pt, breakable: false, width: 100%)[
       #set par(first-line-indent: rhythm.no-indent, leading: rhythm.heading-leading, spacing: rhythm.no-spacing, justify: false)

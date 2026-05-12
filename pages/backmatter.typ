@@ -3,22 +3,35 @@
 
 #let references(items: (), bib: none, style: bibliography-style, full: false) = {
   page-style(numbering: "1", header: [参考文献])[
+    #show heading.where(level: 1): it => {
+      block(above: 24pt, below: 18pt, breakable: false, width: 100%)[
+        #set par(first-line-indent: rhythm.no-indent, leading: rhythm.heading-leading, spacing: rhythm.no-spacing, justify: false)
+        #align(center)[
+          #text(font: fonts.hei-cn, size: size.san, weight: "bold", stroke: 0.2pt, cjk-latin-spacing: none)[#it.body]
+        ]
+      ]
+    }
     #heading(numbering: none, outlined: true)[参考文献]
     #set text(font: fonts.song + fonts.en, size: size.wu)
     #set par(
       first-line-indent: rhythm.no-indent,
       hanging-indent: 2em,
       leading: rhythm.compact-leading,
-      spacing: rhythm.compact-spacing,
+      spacing: rhythm.compact-leading,
     )
+    #set block(above: 0pt, below: 0pt, spacing: rhythm.compact-leading)
     #if bib != none {
-      bibliography("../" + bib, title: none, style: style, full: full)
+      block(width: 100%, above: 0pt, below: 0pt, breakable: true)[
+        #bibliography("../" + bib, title: none, style: style, full: full)
+      ]
     } else {
-      for item in items {
+      for (index, item) in items.enumerate() {
         item.at("label")
         h(0.8em)
         item.at("body")
-        parbreak()
+        if index + 1 < items.len() {
+          parbreak()
+        }
       }
     }
   ]

@@ -1,4 +1,4 @@
-#import "../lib.typ": chapter, table-caption
+#import "../lib.typ": chapter
 
 #chapter[模板样式示例][
 
@@ -10,9 +10,11 @@
 
 == 表格示例
 
-#table-caption[表2.1 主要排版参数示例]
-#align(center)[
-  #table(
+表格应使用 `figure` 包裹 `table`，由模板自动生成章内编号。@tbl:format-params 展示了
+主要排版参数的写法，表序与表名之间自动保留一个字符宽度。
+
+#figure(
+  table(
     columns: (2.2cm, 4.2cm, 6.4cm),
     inset: 6pt,
     table.header(
@@ -29,22 +31,21 @@
     [正文],
     [宋体小四，20 磅行距],
     [英文使用 Times New Roman。],
-  )
-]
+  ),
+  caption: [主要排版参数示例],
+) <format-params>
 
 == 表达式示例
 
-表达式应另行起排，并按章编号。Typst 原生公式编号可继续细化；当前模板示例先展示基础形式：
+表达式应另行起排，公式居中，序号右对齐，并按章编号。正式写作时可用@eqt:example-model
+这样的自动引用减少手动维护成本。
 
-#align(center)[
-  $ y = f(x) + epsilon $
-]
-#align(right)[（2.1）]
+$ y = f(x) + epsilon $ <example-model>
 
 == 后续扩展
 
-如果正式论文中公式、参考文献和图表编号很多，下一步应将图表标题和公式编号封装为自动按章编号
-的函数，减少手动维护编号的成本。
+正式论文中图、表和公式数量较多时，应继续使用 `figure(...)`、`figure(table(...))` 和块级
+数学公式标签，由模板统一维护编号和交叉引用。
 
 == 参考文献引用示例
 

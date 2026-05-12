@@ -1,4 +1,4 @@
-#import "../lib.typ": chapter, figure-caption
+#import "../lib.typ": chapter
 
 #chapter[引言][
 
@@ -21,14 +21,18 @@
 
 == 技术路线
 
-本文的技术路线包括数据准备、街景语义识别、街坊画像构建、街景校验和结果综合解释五个环节。
+本文的技术路线包括数据准备、街景语义识别、街坊画像构建、街景校验和结果综合解释五个环节，
+整体流程见@fig:tech-route。
 
-#align(center)[
-  #rect(width: 10cm, height: 3.5cm, stroke: 0.6pt + gray, fill: rgb("#f7f7f7"))[
-    #align(center + horizon)[技术路线示意占位图]
-  ]
-]
-#figure-caption[图1.1 技术路线示意图]
+#figure(
+  kind: image,
+  align(center)[
+    #rect(width: 10cm, height: 3.5cm, stroke: 0.6pt + gray, fill: rgb("#f7f7f7"))[
+      #align(center + horizon)[技术路线示意占位图]
+    ]
+  ],
+  caption: [技术路线示意图],
+) <tech-route>
 
 === 论文结构
 
