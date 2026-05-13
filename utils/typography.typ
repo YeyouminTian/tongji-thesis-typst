@@ -23,7 +23,7 @@
 
 #let fixed-leading(font-size, line-height) = line-height - font-size
 #let body-leading-value = fixed-leading(size.xiaosi, 20pt)
-#let bibliography-style = "gb-7714-2015-numeric"
+#let bibliography-style = "../assets/GB-T-7714—2015（顺序编码，双语，姓名不大写，无URL、DOI，引注有页码）.csl"
 
 #let rhythm = (
   body-indent: (amount: 2em, all: true),

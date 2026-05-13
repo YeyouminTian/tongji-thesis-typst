@@ -53,6 +53,7 @@ University graduate thesis writing guide and reference example.
 ## Project Structure
 
 - `thesis.typ`: sample thesis entry point.
+- `full-preview.typ`: VSCode/Tinymist full-document preview entry point.
 - `metadata.typ`: thesis metadata such as title, author, school, supervisor,
   discipline, and date.
 - `lib.typ`: public template API. New documents and chapter files should import
@@ -85,8 +86,9 @@ University graduate thesis writing guide and reference example.
 - `preview/`: optional preview entry points for compiling individual chapters
   with the same template wrapper.
 - `appendices/`: appendix files can be added here.
-- `assets/`: logo, figures, and other thesis assets. `tongji-logo.jpeg` is the
-  10.0cm x 2.6cm logo image extracted from the graduate thesis reference DOCX.
+- `assets/`: logo, figures, CSL files, and other thesis assets. `tongji-logo.jpeg`
+  is the 10.0cm x 2.6cm logo image extracted from the graduate thesis reference
+  DOCX.
 - `scripts/build.sh`: local build script for the full thesis. It uses `typst`
   from PATH first, then falls back to
   `/Users/tianye/Downloads/typst-aarch64-apple-darwin/typst`.
@@ -110,6 +112,19 @@ Chapter files should import only what they use, for example:
 When changing styles, edit the layered source files under `utils/`, `layouts/`,
 or `pages/`. `tongji-thesis.typ` is only a compatibility facade.
 
+## VSCode / Tinymist Preview
+
+Open `full-preview.typ` for full-document preview in VSCode/Tinymist.
+
+Do not use `tongji-thesis.typ` or `lib.typ` for visual preview. They are template
+export files for downstream thesis documents.
+
+For writing and layout preview of a single chapter, open `preview/chapter1.typ`
+or compile a chapter preview with `scripts/compile-chapter.sh`.
+
+If Tinymist reports missing CJK fonts, install the configured Songti, Heiti, and
+Fangsong font families locally, or adjust the font lists in `utils/typography.typ`.
+
 ## Build
 
 From this folder, compile the full thesis with:
@@ -119,6 +134,12 @@ From this folder, compile the full thesis with:
 ```
 
 The script compiles `thesis.typ` to `thesis.pdf`.
+
+For full-document preview, compile the checked-in preview entry point with:
+
+```bash
+typst compile full-preview.typ full-preview.pdf
+```
 
 For writing and layout preview of a single chapter, compile the checked-in
 chapter 1 preview entry point with:
@@ -151,8 +172,8 @@ therefore differ from the full thesis output.
 - References, appendix, acknowledgements, CV/publications, originality
   statement, and copyright authorization.
 - BibTeX/BibLaTeX bibliography input via `#references(bib: "references.bib")`,
-  using Typst's `gb-7714-2015-numeric` style. The manual `items` fallback is
-  still supported.
+  using the custom GB/T 7714—2015 CSL file in `assets/`. The manual `items`
+  fallback is still supported.
 
 Figures, tables, and formulas are labeled without prefixes at the definition
 site, for example `<tech-route>` or `<format-params>`. References use the
