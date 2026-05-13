@@ -420,9 +420,9 @@
     <sort>
       <key variable="citation-number"/>
     </sort>
-    <layout vertical-align="sup" delimiter=",">
+    <layout vertical-align="sup" delimiter="," prefix="[" suffix="]">
       <group>
-        <text variable="citation-number" prefix="[" suffix="]"/>
+        <text variable="citation-number"/>
         <text variable="locator"/>
       </group>
     </layout>
