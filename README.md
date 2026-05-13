@@ -82,11 +82,16 @@ University graduate thesis writing guide and reference example.
 - `FORMAT-AUDIT.md`: element-by-element comparison between the guide, DOCX
   reference, and this Typst implementation.
 - `chapters/`: chapter files included by `thesis.typ`.
+- `preview/`: optional preview entry points for compiling individual chapters
+  with the same template wrapper.
 - `appendices/`: appendix files can be added here.
 - `assets/`: logo, figures, and other thesis assets. `tongji-logo.jpeg` is the
   10.0cm x 2.6cm logo image extracted from the graduate thesis reference DOCX.
-- `scripts/build.sh`: local build script. It uses `typst` from PATH first, then
-  falls back to `/Users/tianye/Downloads/typst-aarch64-apple-darwin/typst`.
+- `scripts/build.sh`: local build script for the full thesis. It uses `typst`
+  from PATH first, then falls back to
+  `/Users/tianye/Downloads/typst-aarch64-apple-darwin/typst`.
+- `scripts/compile-chapter.sh`: compile a single chapter preview PDF from a
+  chapter stem such as `chapter1`.
 
 ## Importing the Template
 
@@ -107,13 +112,31 @@ or `pages/`. `tongji-thesis.typ` is only a compatibility facade.
 
 ## Build
 
-From this folder:
+From this folder, compile the full thesis with:
 
 ```bash
 ./scripts/build.sh
 ```
 
 The script compiles `thesis.typ` to `thesis.pdf`.
+
+For writing and layout preview of a single chapter, compile the checked-in
+chapter 1 preview entry point with:
+
+```bash
+typst compile --root . preview/chapter1.typ chapter1-preview.pdf
+```
+
+Or compile any chapter file by stem with:
+
+```bash
+./scripts/compile-chapter.sh chapter1
+./scripts/compile-chapter.sh chapter1 /tmp/chapter1-preview.pdf
+```
+
+Single-chapter output is only for writing and layout preview, not final
+submission. Cross-references, page numbers, and chapter-aware numbering may
+therefore differ from the full thesis output.
 
 ## Current Template Coverage
 
