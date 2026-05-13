@@ -54,6 +54,7 @@
     spacing: rhythm.body-spacing,
   )
   set cite(style: bibliography-style)
+  show cite: set text(font: fonts.en)
   set heading(numbering: heading-numbering)
   show: el.default-enum-list
   show heading: i-figured.reset-counters
