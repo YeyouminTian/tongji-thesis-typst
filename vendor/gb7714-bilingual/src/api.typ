@@ -40,8 +40,8 @@
   // 加载 bib 数据
   let bib-data = load-bibliography(bib-content)
   // 创建隐藏的 bibliography（让 @key 语法工作）
-  // place() 使其不占据文档流空间，避免影响分页和定位
-  hide(place(bibliography(bytes(bib-content), title: none)))
+  // 直接 hide()，不通过 place()，避免在 Typst 0.14+ 下产生空白页
+  hide(bibliography(bytes(bib-content), title: none))
 
   // 设置状态
   _bib-data.update(bib-data)
