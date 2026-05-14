@@ -1,7 +1,8 @@
+#import "../vendor/gb7714-bilingual/lib.typ": gb7714-bibliography
 #import "../layouts/document.typ": page-style
-#import "../utils/typography.typ": fonts, size, rhythm, bibliography-style
+#import "../utils/typography.typ": fonts, size, rhythm
 
-#let references(items: (), bib: none, style: bibliography-style, full: false) = {
+#let references(items: (), bib: none, full: false) = {
   page-style(numbering: "1", header: [参考文献])[
     #show heading.where(level: 1): it => {
       block(above: 24pt, below: 18pt, breakable: false, width: 100%)[
@@ -22,7 +23,7 @@
     #set block(above: 0pt, below: 0pt, spacing: rhythm.compact-leading)
     #if bib != none {
       block(width: 100%, above: 0pt, below: 0pt, breakable: true)[
-        #bibliography("../" + bib, title: none, style: style, full: full)
+        #gb7714-bibliography(title: none, full: full)
       ]
     } else {
       for (index, item) in items.enumerate() {

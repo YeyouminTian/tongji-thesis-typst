@@ -1,4 +1,5 @@
-#import "utils/typography.typ": fonts, size, rhythm, bibliography-style
+#import "vendor/gb7714-bilingual/lib.typ": multicite
+#import "utils/typography.typ": fonts, size, rhythm
 #import "utils/caption.typ": figure-caption, table-caption
 #import "layouts/document.typ": tongji-thesis
 #import "layouts/matter.typ": frontmatter, mainmatter, backmatter, chapter

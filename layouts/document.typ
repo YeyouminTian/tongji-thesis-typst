@@ -1,6 +1,6 @@
 #import "@preview/itemize:0.2.0" as el
 #import "@preview/i-figured:0.2.4" as i-figured
-#import "../utils/typography.typ": fonts, size, rhythm, bibliography-style
+#import "../utils/typography.typ": fonts, size, rhythm
 #import "../utils/metadata.typ": get
 #import "../utils/heading.typ": current-heading, heading-numbering, heading-text
 
@@ -53,8 +53,6 @@
     leading: rhythm.body-leading,
     spacing: rhythm.body-spacing,
   )
-  set cite(style: bibliography-style)
-  show cite: set text(font: fonts.en)
   set heading(numbering: heading-numbering)
   show: el.default-enum-list
   show heading: i-figured.reset-counters

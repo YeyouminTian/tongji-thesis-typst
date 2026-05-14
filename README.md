@@ -46,7 +46,7 @@ University graduate thesis writing guide and reference example.
 - References: title in bold Heiti third size, centered with single spacing, 24pt
   before and 18pt after; entries in Songti/Times New Roman fifth size, hanging
   indent 2 characters, 16pt line height, and adjacent entries kept on the same
-  Word-style 16pt line rhythm, GB/T 7714 numeric bibliography style.
+  Word-style 16pt line rhythm, GB/T 7714—2015 numeric bilingual bibliography style.
 - Acknowledgements: FangSong small fourth size, justified, first-line indent
   2 characters, line height 20pt.
 
@@ -61,8 +61,7 @@ University graduate thesis writing guide and reference example.
 - `tongji-thesis.typ`: compatibility facade that re-exports `lib.typ` for older
   documents.
 - `utils/`: reusable low-level helpers.
-  - `typography.typ`: font stacks, Chinese字号, rhythm, line-height constants,
-    and bibliography style.
+  - `typography.typ`: font stacks, Chinese字号, rhythm, and line-height constants.
   - `metadata.typ`: metadata lookup and text joining helpers.
   - `heading.typ`: heading numbering, current-heading lookup, and chapter state.
   - `text.typ`: cover label spreading, emphasized cover text, and vertical text.
@@ -79,16 +78,16 @@ University graduate thesis writing guide and reference example.
   - `symbols.typ`: symbol explanation page.
   - `backmatter.typ`: references, appendix, acknowledgements, and CV pages.
 - `references.bib`: sample bibliography database used by the GB/T 7714
-  reference list.
+  reference list. Add `language = {zh-CN}` or `language = {en-US}` so bilingual
+  author truncation uses `等` or `et al.` correctly.
 - `FORMAT-AUDIT.md`: element-by-element comparison between the guide, DOCX
   reference, and this Typst implementation.
 - `chapters/`: chapter files included by `thesis.typ`.
 - `preview/`: optional preview entry points for compiling individual chapters
   with the same template wrapper.
 - `appendices/`: appendix files can be added here.
-- `assets/`: logo, figures, CSL files, and other thesis assets. `tongji-logo.jpeg`
-  is the 10.0cm x 2.6cm logo image extracted from the graduate thesis reference
-  DOCX.
+- `assets/`: logo, figures, and other thesis assets. `tongji-logo.jpeg` is the
+  10.0cm x 2.6cm logo image extracted from the graduate thesis reference DOCX.
 - `scripts/build.sh`: local build script for the full thesis. It uses `typst`
   from PATH first, then falls back to
   `/Users/tianye/Downloads/typst-aarch64-apple-darwin/typst`.
@@ -171,9 +170,14 @@ therefore differ from the full thesis output.
   `figure(table(...), caption: ...)` for tables.
 - References, appendix, acknowledgements, CV/publications, originality
   statement, and copyright authorization.
-- BibTeX/BibLaTeX bibliography input via `#references(bib: "references.bib")`,
-  using the custom GB/T 7714—2015 CSL file in `assets/`. The manual `items`
-  fallback is still supported.
+- BibTeX/BibLaTeX bibliography input is initialized at each entry point with
+  `init-gb7714.with(read("references.bib"), ...)`, then rendered by
+  `#references(bib: "references.bib")`. The `bib` argument controls whether the
+  bibliography list is shown; the actual BibTeX source is the file passed to
+  `init-gb7714`. The vendored engine uses GB/T 7714—2015 numeric mode, keeps
+  English surnames in title case, and compresses citation ranges only for three
+  or more consecutive references, so two adjacent references render as `[1,2]`
+  while three render as `[1-3]`. The manual `items` fallback is still supported.
 
 Figures, tables, and formulas are labeled without prefixes at the definition
 site, for example `<tech-route>` or `<format-params>`. References use the

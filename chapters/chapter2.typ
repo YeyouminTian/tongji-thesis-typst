@@ -1,4 +1,4 @@
-#import "../lib.typ": chapter
+#import "../lib.typ": chapter, multicite
 
 #chapter[模板样式示例][
 
@@ -50,6 +50,7 @@ $ y = f(x) + epsilon $ <example-model>
 == 参考文献引用示例
 
 正文中可直接使用 Typst 的 `@key` 语法引用文献。单篇文献引用示例如下：城市功能识别研究可参考
-既有空间语义识别方法@chen2021。多篇文献引用示例如下：街景图像和多模态学习方法可共同支撑
-城市用地功能识别@chen2021 @liu2024。学校格式说明类文献也可同样引用@tongji2025。
+既有空间语义识别方法@chen2021。多篇文献引用示例如下：两篇文献连续引用时显示为
+#multicite("chen2021", "liu2024")，三篇及以上连续引用时显示为
+#multicite("chen2021", "liu2024", "Hassija2024InterpretingBlackBoxXAI")。学校格式说明类文献也可同样引用@tongji2025。
 ]
