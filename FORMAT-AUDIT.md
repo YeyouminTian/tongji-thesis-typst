@@ -66,7 +66,7 @@ Quick Look thumbnails and the Typst output was checked by rendered PNG pages.
 | English abstract body | Times New Roman 12pt, 20pt line height, before/after 0pt | `fonts.en`, `size.xiaosi`, fixed text edges, `body-leading: 8pt`, `body-spacing: 8pt` so cross-paragraph baselines stay 20pt apart | Matched |
 | English keywords | Times New Roman 12pt, label bold | explicit bold label and normal keyword text | Matched |
 | TOC title | Heiti 16pt bold centered, 24pt before, 18pt after | level 1 heading rule | Matched |
-| TOC entries | Songti 12pt, 18pt line height, page numbers right aligned, before/after 0pt | custom outline, `toc-leading: 6pt`, no extra block gap | Matched |
+| TOC entries | Songti 12pt, 18pt line height, page numbers right aligned, before/after 0pt | custom outline, `toc-leading: 6pt`; each entry is an independent block, so wrapped lines use `par.leading` and adjacent entries use the block gap rather than `par.spacing` | Matched |
 | TOC level 2 indent | left indent 2 chars | `2em` | Matched |
 | TOC level 3 indent | left indent 4 chars | `4em` | Matched |
 | Symbols body | Songti/TNR 10.5pt, 16pt line height, before/after 0pt | `size.wu`, `compact-leading: 5.5pt`, `compact-spacing: 0pt` | Matched |

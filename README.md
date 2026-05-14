@@ -28,6 +28,10 @@ University graduate thesis writing guide and reference example.
   characters, fixed line height 20pt. Paragraph boundaries keep the same 20pt
   baseline rhythm as normal line breaks, with no additional Word-style
   before/after paragraph spacing.
+- Table of contents: Songti small fourth size, fixed 18pt rhythm. Each outline
+  entry is rendered as an independent block, so adjacent entry spacing is
+  controlled by the entry block gap instead of Word-style paragraph before/after
+  spacing.
 - Chapter title: Heiti, third size, bold, centered, single line spacing,
   24pt before and 18pt after.
 - First-level heading: Heiti, small third size, single line spacing, 24pt
@@ -123,6 +127,27 @@ or compile a chapter preview with `scripts/compile-chapter.sh`.
 
 If Tinymist reports missing CJK fonts, install the configured Songti, Heiti, and
 Fangsong font families locally, or adjust the font lists in `utils/typography.typ`.
+
+## Word-to-Typst Line Spacing
+
+Word fixed line spacing should first be interpreted as a baseline-to-baseline
+rhythm, then converted to Typst's line-box gap. This template fixes text edges to
+`top-edge: 0.7em` and `bottom-edge: -0.3em`, so one line box occupies exactly one
+font-size. The conversion is therefore:
+
+```text
+Typst leading = Word fixed line spacing - font size
+```
+
+For small fourth size body text, `20pt - 12pt = 8pt`, so body paragraphs use
+`leading: 8pt`. Paragraph `spacing` is also `8pt` only where paragraph boundaries
+must stay on the same 20pt baseline rhythm; it is not extra Word-style
+before/after spacing.
+
+For directory/table-of-contents entries, each entry is an independent block. Keep
+`par.spacing: 0pt`, use `par.leading` only for wrapped lines inside one entry,
+and use the entry block gap for the distance between adjacent entries. With small
+fourth size text and an 18pt target rhythm, that gap is `18pt - 12pt = 6pt`.
 
 ## Build
 
