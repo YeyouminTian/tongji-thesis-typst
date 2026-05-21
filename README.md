@@ -1,236 +1,183 @@
-# Tongji Graduate Thesis Template
+# tongji-thesis-typst
 
-This folder is for building a reusable thesis template based on the Tongji
-University graduate thesis writing guide and reference example.
+同济大学研究生学位论文 Typst 模板 | Tongji University Graduate Thesis Typst Template
 
-## Source Documents
+基于 [Typst](https://typst.app) 的同济大学硕士学位论文 / 博士学位论文排版模板，支持中英双语排版、GB/T 7714 参考文献格式，以及章节独立预览。
 
-- `../写作资料/同济大学研究生学位论文写作参考指南.doc`
-- `../写作资料/同济大学研究生学位论文写作参考示例.doc`
-- The same folder also contains `.docx` versions, which are easier to inspect
-  for style and layout details.
-- Typst Word migration guide: `https://typst.dev/guide/word.html`.
+## 功能特性
 
-## Key Format Requirements Read From The Guide
+- 中英文封面、书脊自动生成
+- 中英文摘要页
+- 自动生成目录
+- GB/T 7714—2015 数字编码制参考文献（基于 gb7714-bilingual 引擎，中英文混排自动切换"等"/"et al."）
+- 图、表、公式按章节自动编号（基于 i-figured 包）
+- 原创性声明与版权授权书
+- 附录、致谢、简历与发表成果页
+- 章节独立编译，快速预览
 
-- Paper: A4, white page.
-- Margins: top/bottom `2.54cm`, left/right `3.17cm`, header `2.0cm`,
-  footer `1.5cm`, gutter `0cm`.
-- Main sequence: Chinese cover, English cover, Chinese abstract, English
-  abstract, table of contents, symbols, chapters, references, appendix,
-  acknowledgements, CV and publications, originality statement, copyright
-  authorization.
-- Page headers start from the Chinese abstract and use the current section or
-  chapter title.
-- Page numbers: front matter uses uppercase Roman numerals; main text starts
-  from chapter 1 with Arabic numerals.
-- Body text: Songti, small fourth size, justified, first-line indent 2 Chinese
-  characters, fixed line height 20pt. Paragraph boundaries keep the same 20pt
-  baseline rhythm as normal line breaks, with no additional Word-style
-  before/after paragraph spacing.
-- Table of contents: Songti small fourth size, fixed 18pt rhythm. Each outline
-  entry is rendered as an independent block, so adjacent entry spacing is
-  controlled by the entry block gap instead of Word-style paragraph before/after
-  spacing.
-- Chapter title: Heiti, third size, bold, centered, single line spacing,
-  24pt before and 18pt after.
-- First-level heading: Heiti, small third size, single line spacing, 24pt
-  before and 18pt after.
-- Second-level heading: Heiti, fourth size, single line spacing, 24pt before
-  and 18pt after.
-- Third-level heading: Heiti, small fourth size, single line spacing, 24pt
-  before and 18pt after.
-- Figure captions: below figures, Songti fifth size, centered, 6pt before and
-  12pt after.
-- Table captions: above tables, Songti fifth size, centered, 6pt before and
-  12pt after.
-- Distances between body text and figure/table components are additive: the
-  normal body paragraph rhythm is retained and caption before/after spacing is
-  added on top of it.
-- References: title in bold Heiti third size, centered with single spacing, 24pt
-  before and 18pt after; entries in Songti/Times New Roman fifth size, hanging
-  indent 2 characters, 16pt line height, and adjacent entries kept on the same
-  Word-style 16pt line rhythm, GB/T 7714—2015 numeric bilingual bibliography style.
-- Acknowledgements: FangSong small fourth size, justified, first-line indent
-  2 characters, line height 20pt.
+## 快速开始
 
-## Project Structure
+### 环境要求
 
-- `thesis.typ`: sample thesis entry point.
-- `full-preview.typ`: VSCode/Tinymist full-document preview entry point.
-- `metadata.typ`: thesis metadata such as title, author, school, supervisor,
-  discipline, and date.
-- `lib.typ`: public template API. New documents and chapter files should import
-  from this file.
-- `tongji-thesis.typ`: compatibility facade that re-exports `lib.typ` for older
-  documents.
-- `utils/`: reusable low-level helpers.
-  - `typography.typ`: font stacks, Chinese字号, rhythm, and line-height constants.
-  - `metadata.typ`: metadata lookup and text joining helpers.
-  - `heading.typ`: heading numbering, current-heading lookup, and chapter state.
-  - `text.typ`: cover label spreading, emphasized cover text, and vertical text.
-  - `caption.typ`: legacy caption helpers retained for compatibility; new
-    content should use Typst `figure(...)` syntax.
-- `layouts/`: document structure and layout rules.
-  - `document.typ`: global `tongji-thesis` show rule and page style.
-  - `matter.typ`: front matter, main matter, back matter, and chapter wrapper.
-  - `declarations.typ`: originality and copyright declaration layouts.
-- `pages/`: concrete page templates.
-  - `cover.typ`: Chinese cover, English cover, and spine.
-  - `abstract.typ`: Chinese and English abstracts.
-  - `outline.typ`: custom table of contents.
-  - `symbols.typ`: symbol explanation page.
-  - `backmatter.typ`: references, appendix, acknowledgements, and CV pages.
-- `references.bib`: sample bibliography database used by the GB/T 7714
-  reference list. Add `language = {zh-CN}` or `language = {en-US}` so bilingual
-  author truncation uses `等` or `et al.` correctly.
-- `FORMAT-AUDIT.md`: element-by-element comparison between the guide, DOCX
-  reference, and this Typst implementation.
-- `chapters/`: chapter files included by `thesis.typ`.
-- `preview/`: optional preview entry points for compiling individual chapters
-  with the same template wrapper.
-- `appendices/`: appendix files can be added here.
-- `assets/`: logo, figures, and other thesis assets. `tongji-logo.jpeg` is the
-  10.0cm x 2.6cm logo image extracted from the graduate thesis reference DOCX.
-- `scripts/build.sh`: local build script for the full thesis. It uses `typst`
-  from PATH first, then falls back to
-  `/Users/tianye/Downloads/typst-aarch64-apple-darwin/typst`.
-- `scripts/compile-chapter.sh`: compile a single chapter preview PDF from a
-  chapter stem such as `chapter1`.
+- [Typst](https://github.com/typst/typst) >= 0.12
+- 中文字体：宋体（SimSun）、黑体（SimHei）、楷体（KaiTi）
+- 英文字体：Times New Roman、Arial
 
-## Importing the Template
+### 编译全文
 
-Use `lib.typ` for new files:
-
-```typst
-#import "lib.typ": *
+```bash
+typst compile thesis.typ thesis.pdf
 ```
 
-Chapter files should import only what they use, for example:
-
-```typst
-#import "../lib.typ": chapter
-```
-
-When changing styles, edit the layered source files under `utils/`, `layouts/`,
-or `pages/`. `tongji-thesis.typ` is only a compatibility facade.
-
-## VSCode / Tinymist Preview
-
-Open `full-preview.typ` for full-document preview in VSCode/Tinymist.
-
-Do not use `tongji-thesis.typ` or `lib.typ` for visual preview. They are template
-export files for downstream thesis documents.
-
-For writing and layout preview of a single chapter, open `preview/chapter1.typ`
-or compile a chapter preview with `scripts/compile-chapter.sh`.
-
-If Tinymist reports missing CJK fonts, install the configured Songti, Heiti, and
-Fangsong font families locally, or adjust the font lists in `utils/typography.typ`.
-
-## Word-to-Typst Line Spacing
-
-Word fixed line spacing should first be interpreted as a baseline-to-baseline
-rhythm, then converted to Typst's line-box gap. This template fixes text edges to
-`top-edge: 0.7em` and `bottom-edge: -0.3em`, so one line box occupies exactly one
-font-size. The conversion is therefore:
-
-```text
-Typst leading = Word fixed line spacing - font size
-```
-
-For small fourth size body text, `20pt - 12pt = 8pt`, so body paragraphs use
-`leading: 8pt`. Paragraph `spacing` is also `8pt` only where paragraph boundaries
-must stay on the same 20pt baseline rhythm; it is not extra Word-style
-before/after spacing.
-
-For directory/table-of-contents entries, each entry is an independent block. Keep
-`par.spacing: 0pt`, use `par.leading` only for wrapped lines inside one entry,
-and use the entry block gap for the distance between adjacent entries. With small
-fourth size text and an 18pt target rhythm, that gap is `18pt - 12pt = 6pt`.
-
-## Build
-
-From this folder, compile the full thesis with:
+或使用脚本：
 
 ```bash
 ./scripts/build.sh
 ```
 
-The script compiles `thesis.typ` to `thesis.pdf`.
+### 单章预览
 
-For full-document preview, compile the checked-in preview entry point with:
+```bash
+./scripts/compile-chapter.sh chapter1 chapter1.pdf
+```
+
+### 全文预览入口
 
 ```bash
 typst compile full-preview.typ full-preview.pdf
 ```
 
-For writing and layout preview of a single chapter, compile the checked-in
-chapter 1 preview entry point with:
+## 使用方法
 
-```bash
-typst compile --root . preview/chapter1.typ chapter1-preview.pdf
+### 1. 填写论文信息
+
+编辑 [metadata.typ](metadata.typ)，填入论文标题、作者、导师、学院等元数据：
+
+```typst
+#let thesis-info = (
+  degree: "硕士",
+  degree_type: "学术学位",
+  title: "某某某研究",
+  author: "某某某",
+  supervisor: "某某某 教授",
+  school: "某某学院",
+  date_zh: "二〇二六年五月",
+  // ...
+)
 ```
 
-Or compile any chapter file by stem with:
+### 2. 撰写章节内容
 
-```bash
-./scripts/compile-chapter.sh chapter1
-./scripts/compile-chapter.sh chapter1 /tmp/chapter1-preview.pdf
+在 `chapters/` 目录下创建各章节文件：
+
+```typst
+#import "../lib.typ": chapter
+
+#chapter[第一章 标题]
+
+这里是正文内容...
 ```
 
-Single-chapter output is only for writing and layout preview, not final
-submission. Cross-references, page numbers, and chapter-aware numbering may
-therefore differ from the full thesis output.
+然后在 [thesis.typ](thesis.typ) 中引入：
 
-## Current Template Coverage
+```typst
+#include "chapters/chapter1.typ"
+#include "chapters/chapter2.typ"
+```
 
-- Chinese cover and English cover.
-- Chinese abstract and English abstract.
-- Table of contents.
-- Symbol table.
-- Main matter with chapter headings.
-- Automatic chapter-aware numbering for figures, tables, and block equations.
-- Native Typst `figure(...)` syntax for images and graphics, and
-  `figure(table(...), caption: ...)` for tables.
-- References, appendix, acknowledgements, CV/publications, originality
-  statement, and copyright authorization.
-- BibTeX/BibLaTeX bibliography input is initialized at each entry point with
-  `init-gb7714.with(read("references.bib"), ...)`, then rendered by
-  `#references(bib: "references.bib")`. The `bib` argument controls whether the
-  bibliography list is shown; the actual BibTeX source is the file passed to
-  `init-gb7714`. The vendored engine uses GB/T 7714—2015 numeric mode, keeps
-  English surnames in title case, and compresses citation ranges only for three
-  or more consecutive references, so two adjacent references render as `[1,2]`
-  while three render as `[1-3]`. The manual `items` fallback is still supported.
+### 3. 参考文献管理
 
-Figures, tables, and formulas are labeled without prefixes at the definition
-site, for example `<tech-route>` or `<format-params>`. References use the
-auto-generated prefixes from `i-figured`: `@fig:tech-route`,
-`@tbl:format-params`, and `@eqt:example-model`.
+将 BibTeX 条目写入 [references.bib](references.bib)，并标注语言：
 
-## Technology Recommendation
+```bibtex
+@article{zhang2024,
+  author = {张三 and 李四},
+  language = {zh-CN},
+  ...
+}
 
-Recommended path: Typst first, with Word as the final submission fallback.
+@article{smith2024,
+  author = {Smith, John and Doe, Jane},
+  language = {en-US},
+  ...
+}
+```
 
-Reason:
+使用 `language = {zh-CN}` 或 `language = {en-US}` 标记文献语言，以确保作者截断时正确显示"等"或"et al."。
 
-- Typst is simpler to write and maintain than LaTeX for a custom thesis
-  template, especially for Chinese prose-heavy chapters.
-- The Tongji template requirements are mostly page geometry, font styles,
-  headings, captions, headers, page numbering, and fixed front matter; Typst is
-  strong enough for these.
-- LaTeX is still better if the thesis has heavy equations, theorem
-  environments, complex cross-references, or a department already accepts a
-  maintained Tongji LaTeX class.
-- Word is safest for final institutional compliance because the official
-  examples are Word documents, but it is weaker for long-term version control,
-  repeatable builds, and batch formatting.
+在正文中引用：
 
-Current local environment note:
+```typst
+如文献 @zhang2024 所述...
+多位引用 @zhang2024 @smith2024 ...
+```
 
-- `typst` is available at `/opt/homebrew/bin/typst` on 2026-05-07.
-- `xelatex`, `latexmk`, `pandoc`, and `soffice` were not found in PATH during
-  the initial setup check.
-- The build script uses `typst` from PATH first, then falls back to a local
-  Downloads binary if present.
+## 项目结构
+
+```
+├── lib.typ                 # 公共 API — 所有模块导出入口
+├── thesis.typ              # 全文编译入口
+├── full-preview.typ        # 全文预览入口
+├── metadata.typ            # 论文元数据（标题、作者等）
+├── references.bib          # 参考文献数据库
+├── layouts/
+│   ├── document.typ        # 文档模板（tongji-thesis 主函数）
+│   ├── matter.typ          # 前言/正文/后记切换
+│   └── declarations.typ    # 原创性声明与版权授权
+├── pages/
+│   ├── cover.typ           # 中英文封面与书脊
+│   ├── abstract.typ        # 中英文摘要
+│   ├── outline.typ         # 目录
+│   ├── symbols.typ         # 符号表
+│   └── backmatter.typ      # 参考文献、附录、致谢、简历
+├── utils/
+│   ├── typography.typ      # 字体栈、字号、基线节奏
+│   ├── heading.typ         # 标题编号与格式
+│   ├── text.typ            # 文本工具函数
+│   ├── caption.typ         # 图表标题格式
+│   └── metadata.typ        # 日期/学科格式工具
+├── vendor/
+│   └── gb7714-bilingual/   # GB/T 7714 双语参考文献引擎（改自 [pku-typst/gb7714-bilingual](https://github.com/pku-typst/gb7714-bilingual)）
+├── chapters/               # 章节内容
+├── appendices/             # 附录内容
+├── preview/                # 单章预览示例
+├── assets/                 # 校徽等图片资源
+└── scripts/
+    ├── build.sh            # 全文编译脚本
+    └── compile-chapter.sh  # 单章编译脚本
+```
+
+## 排版规范
+
+### 行距换算
+
+Word 固定行距为基线到基线的目标距离。模板固定文字行框（`top-edge: 0.7em`, `bottom-edge: -0.3em`），使一行文字框高度等于一个字号。换算公式：
+
+```
+Typst leading = Word 行距 − 字号
+```
+
+| 场景 | Word 行距 | 字号 | Typst leading |
+|------|-----------|------|---------------|
+| 正文 | 20pt | 12pt | 8pt |
+| 目录 | 18pt | 12pt | 6pt |
+
+正文段落间 `spacing: 8pt` 仅用于保持跨段落基线在 20pt 节奏上，并非额外的段前/段后间距。目录条目为独立 block，`par.spacing: 0pt`，行内换行用 `leading`，条目间距用 block gap。
+
+### 参考文献引擎
+
+使用项目内置的 `vendor/gb7714-bilingual` 引擎渲染参考文献，每个入口文件需调用：
+
+```typst
+#import "vendor/gb7714-bilingual/lib.typ": init-gb7714
+
+#show: init-gb7714.with(read("references.bib"), style: "numeric", version: "2015", show-url: false, show-doi: false)
+```
+
+## License
+
+本项目仅供学习交流使用。同济大学学位论文格式版权归同济大学所有。
+
+## 致谢
+
+参考文献引擎基于 [pku-typst/gb7714-bilingual](https://github.com/pku-typst/gb7714-bilingual) 改造，感谢原作者的贡献。
