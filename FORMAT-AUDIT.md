@@ -16,8 +16,8 @@ Quick Look thumbnails and the Typst output was checked by rendered PNG pages.
 | --- | --- | --- | --- |
 | Paper | A4 | `paper: "a4"` | Matched |
 | Margins | top/bottom 2.54cm, left/right 3.17cm | `page.margin` set to exact values | Matched |
-| Header position | header at 2.0cm from top | top margin 2.54cm with `header-ascent: 0.54cm` | Matched |
-| Footer position | footer at 1.5cm from bottom | bottom margin 2.54cm with `footer-descent: 1.04cm` | Matched |
+| Header position | header at 2.0cm from top, rule directly below header text | calibrated pages use top margin 3.75cm, `header-ascent: 1.22cm`, and measured header text-to-rule spacing | Matched |
+| Footer position | footer at reference PDF height | main/backmatter use `footer-descent: 0.63cm`; frontmatter uses `footer-descent: 0.69cm` to match Roman page-number height | Matched |
 | Header text | Songti 10.5pt; English abstract uses Times New Roman 10.5pt | `fonts.song` or `fonts.en`, `size.wu` | Matched |
 | Page number | Songti 10.5pt centered | footer uses `fonts.song`, `size.wu` | Matched |
 | Page transitions | Structure order should be continuous unless an intentional blank page is inserted | `mainmatter()` and `backmatter()` use weak page breaks to avoid accidental blank pages | Matched |
@@ -75,8 +75,8 @@ Quick Look thumbnails and the Typst output was checked by rendered PNG pages.
 
 | Element | Reference Requirement | Typst Implementation | Status |
 | --- | --- | --- | --- |
-| Chapter title | Heiti 16pt bold centered, 24pt before, 18pt after | level 1 heading rule | Matched |
-| First-level heading | Heiti 15pt, single spacing, 24pt before, 18pt after | level 2 heading rule | Matched |
+| Chapter title | Heiti 16pt bold centered, 24pt before, 18pt after | mainmatter and backmatter page styles calibrated to reference PDF bounding boxes, including title-to-content gaps | Matched |
+| First-level heading | Heiti 15pt, single spacing, 24pt before, 6pt after | level 2 heading rule uses PDF-calibrated visual after-spacing to match reference bounding boxes | Matched |
 | Second-level heading | Heiti 14pt, single spacing, 24pt before, 18pt after | level 3 heading rule | Matched |
 | Third-level heading | Heiti 12pt, single spacing, 24pt before, 18pt after | level 4 heading rule | Matched |
 | Heading number gap | one character between number and title; no automatic CJK/Latin spacing inside the number | manual heading-number strings, dedicated Heiti number text, `cjk-latin-spacing: none`, then `h(1em)` | Matched |

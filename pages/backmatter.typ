@@ -3,16 +3,18 @@
 #import "../utils/typography.typ": fonts, size, rhythm
 
 #let references(items: (), bib: none, full: false) = {
-  page-style(numbering: "1", header: [参考文献])[
+  page-style(numbering: "1", header: [参考文献], top-margin: 3.75cm, header-ascent: 1.22cm)[
     #show heading.where(level: 1): it => {
-      block(above: 24pt, below: 18pt, breakable: false, width: 100%)[
+      block(above: 24pt, below: 0pt, breakable: false, width: 100%)[
         #set par(first-line-indent: rhythm.no-indent, leading: rhythm.heading-leading, spacing: rhythm.no-spacing, justify: false)
         #align(center)[
           #text(font: fonts.hei-cn, size: size.san, weight: "bold", stroke: 0.2pt, cjk-latin-spacing: none)[#it.body]
         ]
       ]
+      v(15.8pt)
     }
     #heading(numbering: none, outlined: true)[参考文献]
+    #v(12.7pt)
     #set text(font: fonts.song + fonts.en, size: size.wu)
     #set par(
       first-line-indent: rhythm.no-indent,
@@ -40,7 +42,7 @@
 
 #let appendix(title, body) = {
   pagebreak()
-  page-style(numbering: "1", header: title)[
+  page-style(numbering: "1", header: title, top-margin: 3.75cm, header-ascent: 1.22cm)[
     #heading(numbering: none, outlined: true)[#title]
     #body
   ]
@@ -48,8 +50,9 @@
 
 #let acknowledgements(body) = {
   pagebreak()
-  page-style(numbering: "1", header: [致谢])[
+  page-style(numbering: "1", header: [致谢], top-margin: 3.75cm, header-ascent: 1.22cm)[
     #heading(numbering: none, outlined: true)[致谢]
+    #v(15.2pt)
     #set text(font: fonts.fang, size: size.xiaosi)
     #set par(
       first-line-indent: rhythm.body-indent,
@@ -63,8 +66,9 @@
 
 #let cv-and-publications(body) = {
   pagebreak()
-  page-style(numbering: "1", header: [个人简历、在读期间发表的学术成果])[
+  page-style(numbering: "1", header: [个人简历、在读期间发表的学术成果], top-margin: 3.75cm, header-ascent: 1.22cm)[
     #heading(numbering: none, outlined: true)[个人简历、在读期间发表的学术成果]
+    #v(13.1pt)
     #set text(font: fonts.song + fonts.en, size: size.wu)
     #set par(
       first-line-indent: rhythm.no-indent,

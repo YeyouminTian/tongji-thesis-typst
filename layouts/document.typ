@@ -4,23 +4,23 @@
 #import "../utils/metadata.typ": get
 #import "../utils/heading.typ": current-heading, heading-numbering, heading-text
 
-#let page-style(numbering: none, header: current-heading(), header-font: fonts.song, body) = {
+#let page-style(numbering: none, header: current-heading(), header-font: fonts.song, top-margin: 2.54cm, header-ascent: 0.54cm, footer-descent: 0.63cm, body) = {
   set page(
     paper: "a4",
     margin: (
-      top: 2.54cm,
+      top: top-margin,
       bottom: 2.54cm,
       left: 3.17cm,
       right: 3.17cm,
     ),
-    header-ascent: 0.54cm,
-    footer-descent: 0.54cm,
+    header-ascent: header-ascent,
+    footer-descent: footer-descent,
     header: if header == none {
       none
     } else {
       block(width: 100%)[
         #align(center, text(font: header-font, size: size.wu)[#header])
-        #v(2pt)
+        #v(-6.8pt)
         #line(length: 100%, stroke: 0.5pt)
       ]
     },
@@ -87,8 +87,16 @@
     align(center)[#text(font: fonts.song + fonts.en, size: size.wu)[#it]]
   }
 
+  // These after-spacing constants are calibrated to the official PDF text bounding boxes.
+  let heading-spacing = (
+    level-1-before: 24pt,
+    level-1-after: 15.8pt,
+    level-2-before: 24pt,
+    level-2-after: 20.3pt,
+  )
+
   show heading.where(level: 1): it => {
-    block(above: 24pt, below: 18pt, breakable: false, width: 100%)[
+    block(above: heading-spacing.level-1-before, below: 0pt, breakable: false, width: 100%)[
       #set par(first-line-indent: rhythm.no-indent, leading: rhythm.heading-leading, spacing: rhythm.no-spacing, justify: false)
       #align(center)[
         #text(font: fonts.hei-cn, size: size.san, stroke: 0.2pt, cjk-latin-spacing: none)[
@@ -96,10 +104,11 @@
         ]
       ]
     ]
+    v(heading-spacing.level-1-after)
   }
 
   show heading.where(level: 2): it => {
-    block(above: 24pt, below: 18pt, breakable: false, width: 100%)[
+    block(above: heading-spacing.level-2-before, below: heading-spacing.level-2-after, breakable: false, width: 100%)[
       #set par(first-line-indent: rhythm.no-indent, leading: rhythm.heading-leading, spacing: rhythm.no-spacing, justify: false)
       #text(font: fonts.hei-cn, size: size.xiaosan, cjk-latin-spacing: none)[#heading-text(it)]
     ]

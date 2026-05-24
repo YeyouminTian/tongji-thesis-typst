@@ -41,7 +41,7 @@
       []
     }
 
-    block(width: 100%, above: 0pt, below: rhythm.toc-leading)[
+    block(width: 100%, above: 0pt, below: 2.4pt)[
       #set text(font: fonts.song + fonts.en, size: size.xiaosi, top-edge: 0.7em, bottom-edge: -0.3em)
       #set par(first-line-indent: rhythm.no-indent, leading: rhythm.toc-leading, spacing: rhythm.no-spacing, justify: false)
       #h(indent)
@@ -56,8 +56,9 @@
 }
 
 #let table-of-contents() = {
-  page-style(numbering: "I", header: [目录])[
+  page-style(numbering: "I", header: [目录], top-margin: 3.75cm, header-ascent: 1.22cm, footer-descent: 0.69cm)[
     #heading(numbering: none, outlined: false)[目录]
+    #v(13pt)
     #set par(first-line-indent: rhythm.no-indent, leading: rhythm.toc-leading, spacing: rhythm.no-spacing, justify: false)
     #outline(depth: 3)
     #pagebreak()

@@ -25,10 +25,10 @@
     let new-chapter = if current-nums.len() > 0 { current-nums.at(0) + 1 } else { 1 }
     chapter-state.update(new-chapter)
   }
-  page-style(numbering: "1", header: context {
+  page-style(numbering: "1", top-margin: 3.75cm, header-ascent: 1.22cm, header: context {
     [第 #str(chapter-state.get()) 章#h(1em)#title]
   })[
     #heading(level: 1)[#title]
-    #block(width: 100%)[#body]
+    #body
   ]
 }

@@ -35,7 +35,7 @@
   statement-leading: fixed-leading(size.si, 18pt),     // 普通声明页签名区行间距（18pt行高，四号字）
   declaration-leading: fixed-leading(size.si, 25pt),   // 原创性声明/版权授权书行间距（25pt行高，四号字）
   declaration-v-spacing: 0.20cm,                       // 声明页行与行之间的垂直间距
-  heading-leading: 0pt,                                // 标题单倍行距（固定行框下为1倍字号）
+  heading-leading: 0.2em,                              // 标题单倍行距（学校Word模板约1.2倍行高）
   single-leading: 0.65em,                              // 普通单倍行距（Typst默认相对值）
   body-spacing: body-leading-value,                    // 跨段也保持20pt基线行距
   compact-spacing: 0pt,                                // 紧凑段落间距
