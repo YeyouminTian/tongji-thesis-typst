@@ -15,27 +15,38 @@
   if nums.len() == 0 {
     []
   } else if level == 1 {
-    "第" + str(nums.at(0)) + "章"
+    "第 " + str(nums.at(0)) + " 章"
   } else {
     nums.slice(0, calc.min(level, nums.len())).map(n => str(n)).join(".")
   }
 }
 
-#let heading-number-text(number) = {
-  text(font: fonts.hei-cn, cjk-latin-spacing: none)[#number]
+#let heading-number-parts(level, nums) = {
+  if nums.len() == 0 {
+    (prefix: [], number: [], suffix: [])
+  } else if level == 1 {
+    (prefix: "第 ", number: str(nums.at(0)), suffix: " 章")
+  } else {
+    (prefix: [], number: nums.slice(0, calc.min(level, nums.len())).map(n => str(n)).join("."), suffix: [])
+  }
+}
+
+#let heading-number-run(number) = {
+  text(font: fonts.hei-strict, size: 1.04em, baseline: 0.1em, cjk-latin-spacing: none)[#number]
+}
+
+#let heading-number-text(parts) = {
+  [#text(font: fonts.hei-strict, cjk-latin-spacing: none)[#parts.prefix]#heading-number-run(parts.number)#text(font: fonts.hei-strict, cjk-latin-spacing: none)[#parts.suffix]]
 }
 
 #let heading-text(it) = {
-  let prefix = if it.numbering == none {
-    none
-  } else {
-    context format-heading-number(it.level, counter(heading).get())
-  }
-
-  if prefix == none {
+  if it.numbering == none {
     it.body
   } else {
-    [#heading-number-text(prefix)#h(0.3em)#it.body]
+    context {
+      let parts = heading-number-parts(it.level, counter(heading).get())
+      [#heading-number-text(parts)#h(0.3em)#it.body]
+    }
   }
 }
 

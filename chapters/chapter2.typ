@@ -51,6 +51,6 @@ $ y = f(x) + epsilon $ <example-model>
 
 正文中可直接使用 Typst 的 `@key` 语法引用文献。单篇文献引用示例如下：城市功能识别研究可参考
 既有空间语义识别方法@chen2021。多篇文献引用示例如下：两篇文献连续引用时显示为
-#multicite("chen2021", "liu2024")，三篇及以上连续引用时显示为
-#multicite("chen2021", "liu2024", "Hassija2024InterpretingBlackBoxXAI")。学校格式说明类文献也可同样引用@tongji2025。
+#multicite[@chen2021 @liu2024]，三篇及以上连续引用时显示为
+#multicite[@chen2021 @liu2024 @Hassija2024InterpretingBlackBoxXAI]。学校格式说明类文献也可同样引用@tongji2025。
 ]

@@ -21,6 +21,7 @@
 
 - [Typst](https://github.com/typst/typst) >= 0.12
 - 中文字体：宋体（SimSun）、黑体（SimHei）、楷体（KaiTi）
+- 标题编号：强制使用黑体栈（Source Han Sans / Noto Sans CJK / SimHei / Heiti），不使用 Arial 作为数字回退，并对连续数字编号做小幅字号与基线补偿以匹配中文标题字面高度
 - 英文字体：Times New Roman、Arial
 
 ### 编译全文
