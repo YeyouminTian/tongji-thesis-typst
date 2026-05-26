@@ -56,7 +56,7 @@
 }
 
 #let table-of-contents() = {
-  page-style(numbering: "I", header: [目录], top-margin: 3.75cm, header-ascent: 1.22cm, footer-descent: 0.69cm)[
+  page-style(numbering: "I", header: [目录], top-margin: 3.459cm, header-ascent: 0.929cm, footer-descent: 0.69cm)[
     #heading(numbering: none, outlined: false)[目录]
     #v(13pt)
     #set par(first-line-indent: rhythm.no-indent, leading: rhythm.toc-leading, spacing: rhythm.no-spacing, justify: false)

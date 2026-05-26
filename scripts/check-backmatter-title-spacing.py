@@ -40,9 +40,9 @@ def page_words(page: int):
     for match in pattern.finditer(text):
         x_min, y_min, x_max, y_max = map(float, match.group(1, 2, 3, 4))
         value = html.unescape(re.sub("<.*?>", "", match.group(5)))
-        if y_min > 60:
+        if y_min > 90:
             words.append((x_min, y_min, x_max, y_max, value))
-    return sorted(words, key=lambda item: (item[1], item[0]))
+    return sorted(words, key=lambda item: (round(item[1] / 4) * 4, item[0]))
 
 
 def heading_top(page: int, target: str) -> float:

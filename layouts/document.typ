@@ -108,7 +108,8 @@
   }
 
   show heading.where(level: 2): it => {
-    block(above: heading-spacing.level-2-before, below: heading-spacing.level-2-after, breakable: false, width: 100%)[
+    block(above: 0pt, below: heading-spacing.level-2-after, breakable: false, width: 100%)[
+      #v(16.2pt)
       #set par(first-line-indent: rhythm.no-indent, leading: rhythm.heading-leading, spacing: rhythm.no-spacing, justify: false)
       #text(font: fonts.hei-cn, size: size.xiaosan, cjk-latin-spacing: none)[#heading-text(it)]
     ]

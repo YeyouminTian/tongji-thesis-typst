@@ -16,9 +16,9 @@ CASES = [
     ("摘要", PDF, 4, "摘要", REFERENCE, 9, "摘要", 80, 340),
     ("Abstract", PDF, 5, "ABSTRACT", REFERENCE, 10, "ABSTRACT", 80, 340),
     ("正文第1章", PDF, 8, "第1章引言", REFERENCE, 12, "第1章引言", 80, 340),
-    ("参考文献", PDF, 12, "参考文献", REFERENCE, 16, "参考文献", 80, 340),
-    ("致谢", PDF, 14, "致谢", REFERENCE, 18, "致谢", 80, 340),
-    ("个人简历", PDF, 15, "个人简历、在读期间发表的学术成果", REFERENCE, 19, "个人简历、在读期间发表的学术成果", 80, 340),
+    ("参考文献", PDF, 12, "参考文献", REFERENCE, 18, "参考文献", 80, 340),
+    ("致谢", PDF, 14, "致谢", REFERENCE, 20, "致谢", 80, 340),
+    ("个人简历", PDF, 15, "个人简历、在读期间发表的学术成果", REFERENCE, 21, "个人简历、在读期间发表的学术成果", 80, 340),
 ]
 
 
@@ -48,7 +48,7 @@ def page_words(pdf: Path, page: int):
         x_min, y_min, x_max, y_max = map(float, match.group(1, 2, 3, 4))
         value = html.unescape(re.sub("<.*?>", "", match.group(5)))
         words.append((x_min, y_min, x_max, y_max, value))
-    return sorted(words, key=lambda item: (item[1], item[0]))
+    return sorted(words, key=lambda item: (round(item[1] / 4) * 4, item[0]))
 
 
 def title_box(words, target: str):
