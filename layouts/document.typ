@@ -77,10 +77,38 @@
         above: rhythm.body-spacing + if kind-name == "table" { _caption-before } else { 0pt },
         below: rhythm.body-spacing + if kind-name == "table" { 0pt } else { _caption-after },
       )[
-        #i-figured.show-figure(it)
+        #i-figured.show-figure(it, numbering: "1-1")
       ]
     }
   }
+
+  let _figure-reference-text(it) = context {
+    let element = it.element
+    if element == none or type(element) != content or element.func() != figure {
+      it
+    } else {
+      let kind-name = _figure-kind-name(element.kind)
+      let supplement = if kind-name == "image" {
+        [图]
+      } else if kind-name == "table" {
+        [表]
+      } else {
+        none
+      }
+      if supplement == none {
+        it
+      } else {
+        let heading-numbers = counter(heading).at(element.location())
+        let figure-numbers = counter(figure.where(kind: element.kind)).at(element.location())
+        let chapter_number = heading-numbers.at(0, default: 0)
+        let item_number = figure-numbers.at(0, default: 0)
+        let ref_number = str(chapter_number) + "-" + str(item_number)
+        text(font: fonts.song + fonts.en, size: size.xiaosi, cjk-latin-spacing: none)[#supplement #ref_number]
+      }
+    }
+  }
+
+  show ref: _figure-reference-text
 
   show figure.caption: it => {
     set par(first-line-indent: rhythm.no-indent, leading: rhythm.single-leading, spacing: rhythm.no-spacing)
