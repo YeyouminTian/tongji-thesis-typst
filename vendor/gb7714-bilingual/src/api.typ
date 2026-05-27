@@ -14,6 +14,102 @@
 #import "authors.typ": format-author-intext
 #import "renderers/mod.typ": render-entry
 
+#let _raw-display-fields = (
+  "title",
+  "booktitle",
+  "journal",
+  "journaltitle",
+  "series",
+)
+
+#let _strip-protection-braces(value) = {
+  value.trim().replace("{", "").replace("}", "")
+}
+
+#let _brace-depth(value) = {
+  value.clusters().filter(it => it == "{").len() - value.clusters().filter(it => it == "}").len()
+}
+
+#let _field-value-start(line) = {
+  let opening = line.position("{")
+  if opening == none {
+    return ""
+  }
+  line.slice(opening + 1)
+}
+
+#let _strip-field-ending(value) = {
+  let result = value.trim()
+  if result.ends-with(",") {
+    result = result.slice(0, result.len() - 1).trim()
+  }
+  if result.ends-with("}") {
+    result = result.slice(0, result.len() - 1).trim()
+  }
+  result
+}
+
+#let _extract-raw-display-fields(bib-content) = {
+  let fields-by-key = (:)
+  let current-key = none
+  let current-field = none
+  let current-value = ""
+  let depth = 0
+
+  for line in bib-content.split("\n") {
+    let entry = line.match(regex("^\\s*@[^{]+\\{\\s*([^,]+)"))
+    if entry != none {
+      current-key = entry.captures.first().trim()
+      fields-by-key.insert(current-key, (:))
+      current-field = none
+      current-value = ""
+      depth = 0
+    }
+
+    if current-key != none and current-field == none {
+      let field = line.match(regex("^\\s*([A-Za-z]+)\\s*=\\s*\\{"))
+      if field != none {
+        let name = lower(field.captures.first())
+        if name in _raw-display-fields {
+          current-field = name
+          current-value = _field-value-start(line)
+          depth = _brace-depth(current-value)
+        }
+      }
+    } else if current-field != none {
+      current-value += " " + line.trim()
+      depth += _brace-depth(line)
+    }
+
+    if current-key != none and current-field != none and depth <= -1 {
+      let fields = fields-by-key.at(current-key, default: (:))
+      fields.insert(current-field, _strip-protection-braces(_strip-field-ending(current-value)))
+      fields-by-key.insert(current-key, fields)
+      current-field = none
+      current-value = ""
+      depth = 0
+    }
+  }
+
+  fields-by-key
+}
+
+#let _with-raw-display-fields(bib-data, raw-fields) = {
+  let merged = (:)
+  for pair in bib-data.pairs() {
+    let key = pair.first()
+    let entry = pair.last()
+    let fields = entry.fields
+    let overrides = raw-fields.at(key, default: (:))
+    for override in overrides.pairs() {
+      fields.insert(override.first(), override.last())
+    }
+    entry.fields = fields
+    merged.insert(key, entry)
+  }
+  merged
+}
+
 /// 初始化 GB/T 7714 双语参考文献系统（内部实现）
 ///
 /// - bib-content: BibTeX 文件内容
@@ -38,7 +134,8 @@
   doc,
 ) = {
   // 加载 bib 数据
-  let bib-data = load-bibliography(bib-content)
+  let raw-fields = _extract-raw-display-fields(bib-content)
+  let bib-data = _with-raw-display-fields(load-bibliography(bib-content), raw-fields)
   // 创建隐藏的 bibliography（让 @key 语法工作）
   // 直接 hide()，不通过 place()，避免在 Typst 0.14+ 下产生空白页
   hide(bibliography(bytes(bib-content), title: none))

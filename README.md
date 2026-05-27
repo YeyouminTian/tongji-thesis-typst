@@ -88,7 +88,7 @@ typst compile full-preview.typ full-preview.pdf
 
 ### 3. 参考文献管理
 
-将 BibTeX 条目写入 [references.bib](references.bib)，并标注语言：
+将 BibTeX 条目写入 [references.bib](references.bib)，并标注语言。参考文献标题会保留 BibTeX 原文中的大小写，因此 `POI`、`LLM` 等缩略词无需额外加花括号保护：
 
 ```bibtex
 @article{zhang2024,
@@ -174,6 +174,8 @@ Typst leading = Word 行距 − 字号
 
 #show: init-gb7714.with(read("references.bib"), style: "numeric", version: "2015", show-url: false, show-doi: false)
 ```
+
+内置引擎会用原始 BibTeX 字段覆盖 `citegeist` 对 `title`、`booktitle`、`journal` 等展示字段的大小写正规化，避免中文题名中的 `POI` 等缩略词被渲染为 `poi` 或 `Poi`。
 
 ## License
 
