@@ -16,7 +16,8 @@ number = {04},
 pages = {649-658},
 year = {2020},
 issn = {1001-5221},
-doi = {10.13284/j.cnki.rddl.003261}
+doi = {10.13284/j.cnki.rddl.003261},
+url = {https://doi.org/10.13284/j.cnki.rddl.003261}
 }
 
 @article{poi_first,
@@ -47,6 +48,15 @@ title = {基于高分遥感影像和POI的
 journal = {热带地理},
 year = {2024}
 }
+
+@online{ngcc_2024,
+author = {{国家地理信息公共服务平台}},
+title = {{2024版国家地理信息公共服务平台（天地图）正式发布}},
+date = {2024-04-26},
+url = {https://www.ngcc.cn/xwzx/ywcg/202404/t20240426_2410.html},
+urldate = {2026-05-27},
+language = {zh-CN}
+}
 """
 
 TYP = """#import "../vendor/gb7714-bilingual/lib.typ": init-gb7714, gb7714-bibliography
@@ -58,6 +68,7 @@ TYP = """#import "../vendor/gb7714-bilingual/lib.typ": init-gb7714, gb7714-bibli
 #cite(<brace_protected>)
 #cite(<internal_braces>)
 #cite(<multiline_title>)
+#cite(<ngcc_2024>)
 
 #gb7714-bibliography(title: none)
 """
@@ -100,6 +111,9 @@ def main() -> None:
         "Interpretingblack-boxmodels:Areviewonexplainableartificialintelligence",
         "UsingPOIDataforLandUse",
         "JournalofGIS",
+        "2024版国家地理信息公共服务平台（天地图）正式发布",
+        "[2026-05-27]",
+        "https://www.ngcc.cn/xwzx/ywcg/202404/t20240426_2410.html",
     )
     missing = [item for item in expected if item not in compact_text]
     if missing:
@@ -120,6 +134,16 @@ def main() -> None:
         raise AssertionError(
             "BibTeX protection braces leaked into bibliography output; found "
             + repr(leaked)
+            + " in extracted text:\n"
+            + text
+        )
+
+    hidden = ("https://doi.org/10.13284/j.cnki.rddl.003261",)
+    shown = [item for item in hidden if item in compact_text]
+    if shown:
+        raise AssertionError(
+            "non-webpage URLs were rendered despite show-url: false; found "
+            + repr(shown)
             + " in extracted text:\n"
             + text
         )

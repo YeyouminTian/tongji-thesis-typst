@@ -106,6 +106,19 @@ typst compile full-preview.typ full-preview.pdf
 
 使用 `language = {zh-CN}` 或 `language = {en-US}` 标记文献语言，以确保作者截断时正确显示"等"或"et al."。
 
+网页/在线资源使用 `@online`，并填写 `url` 和 `urldate`。即使模板入口保持 `show-url: false` 以隐藏普通期刊论文的 URL，`@online` 条目仍会按 GB/T 7714 格式显示访问路径：
+
+```bibtex
+@online{ngcc_2024,
+  author = {{国家地理信息公共服务平台}},
+  title = {{2024版国家地理信息公共服务平台（天地图）正式发布}},
+  date = {2024-04-26},
+  url = {https://www.ngcc.cn/xwzx/ywcg/202404/t20240426_2410.html},
+  urldate = {2026-05-27},
+  language = {zh-CN},
+}
+```
+
 在正文中引用：
 
 ```typst
@@ -175,7 +188,7 @@ Typst leading = Word 行距 − 字号
 #show: init-gb7714.with(read("references.bib"), style: "numeric", version: "2015", show-url: false, show-doi: false)
 ```
 
-内置引擎会用原始 BibTeX 字段覆盖 `citegeist` 对 `title`、`booktitle`、`journal` 等展示字段的大小写正规化，避免中文题名中的 `POI` 等缩略词被渲染为 `poi` 或 `Poi`。
+内置引擎会用原始 BibTeX 字段覆盖 `citegeist` 对 `title`、`booktitle`、`journal` 等展示字段的大小写正规化，避免中文题名中的 `POI` 等缩略词被渲染为 `poi` 或 `Poi`。网页/在线资源的 URL 是 GB/T 7714 必备访问路径，`@online` 条目会显示 URL；普通文献仍受 `show-url: false` 控制。
 
 ## License
 

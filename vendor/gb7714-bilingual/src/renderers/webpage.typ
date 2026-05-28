@@ -82,7 +82,7 @@
   }
 
   // URL（网页文献的关键信息，可点击链接）
-  if config.show-url and url != "" {
+  if url != "" {
     let url-link = link(url, url)
     result = [#result. #url-link]
   }
