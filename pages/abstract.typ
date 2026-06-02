@@ -16,6 +16,7 @@
     #block(width: 100%)[#body]
     #parbreak()
     #set par(first-line-indent: rhythm.body-indent, leading: rhythm.body-leading, spacing: rhythm.no-spacing)
+    #v(20pt, weak: false) // 关键词与正文之间空一行（20pt行高），对齐学校写作示例
     #text(font: fonts.song, size: size.xiaosi, weight: "bold")[关键词：]
     #text(font: fonts.song, size: size.xiaosi)[#joined(keywords)]
     #pagebreak()
@@ -45,6 +46,7 @@
     )
     #body
     #parbreak()
+    #v(20pt, weak: false) // 关键词与正文之间空一行（20pt行高），对齐学校写作示例
     #text(font: fonts.en, size: size.xiaosi, weight: "bold")[Key Words: ]
     #text(font: fonts.en, size: size.xiaosi)[#joined(keywords, sep: ", ")]
     #pagebreak()
