@@ -84,7 +84,13 @@
 
   let _figure-reference-text(it) = context {
     let element = it.element
-    if element == none or type(element) != content or element.func() != figure {
+    if element == none or type(element) != content {
+      it
+    } else if element.func() == heading and element.level == 1 {
+      let nums = counter(heading).at(element.location())
+      let chapter_number = nums.at(0, default: 0)
+      link(element.location())[#text(font: fonts.song + fonts.en, size: size.xiaosi, cjk-latin-spacing: none)[第 #str(chapter_number) 章]]
+    } else if element.func() != figure {
       it
     } else {
       let kind-name = _figure-kind-name(element.kind)

@@ -17,7 +17,7 @@
   body
 }
 
-#let chapter(title, body) = {
+#let chapter(title, body, label: none) = {
   pagebreak(weak: true)
   // 先获取当前章节计数，然后+1作为新章节号
   context {
@@ -29,7 +29,7 @@
     [第 #str(chapter-state.get()) 章#h(1em)#title]
   })[
     #v(16.3pt)
-    #heading(level: 1)[#title]
+    #heading(level: 1)[#title]#if label != none { label }
     #v(8.9pt)
     #body
   ]
