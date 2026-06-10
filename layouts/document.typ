@@ -89,7 +89,13 @@
     } else if element.func() == heading and element.level == 1 {
       let nums = counter(heading).at(element.location())
       let chapter_number = nums.at(0, default: 0)
-      link(element.location())[#text(font: fonts.song + fonts.en, size: size.xiaosi, cjk-latin-spacing: none)[第 #str(chapter_number) 章]]
+      let target-label = str(it.target)
+      let ref-text = if target-label.starts-with("app:") {
+        [附录#numbering("A", chapter_number)]
+      } else {
+        [第 #str(chapter_number) 章]
+      }
+      link(element.location())[#text(font: fonts.song + fonts.en, size: size.xiaosi, cjk-latin-spacing: none)[#ref-text]]
     } else if element.func() != figure {
       it
     } else {

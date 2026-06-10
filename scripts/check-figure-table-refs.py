@@ -13,12 +13,19 @@ ENTRY = r'''#import "/lib.typ": tongji-thesis, mainmatter, chapter
 #show: body => tongji-thesis(info: thesis-info)[#body]
 
 #mainmatter[
-  #chapter[引用测试][
+  #chapter(label: <chap:ref-test>)[引用测试][
+    章节引用 @chap:ref-test。
     #figure(rect(width: 1cm, height: 1cm), caption: [测试图]) <fig:test>
     图引用 @fig:test。
     #figure(table(columns: 1, [A]), caption: [测试表]) <tbl:test>
     表引用 @tbl:test。
+    完整检验结果见@app:kip-statistical-tests。
   ]
+
+  #pagebreak()
+  #set heading(numbering: n => "附录" + numbering("A", n))
+  #counter(heading).update(0)
+  = KIP 消融实验完整统计检验结果 <app:kip-statistical-tests>
 ]
 '''
 
@@ -45,7 +52,7 @@ def render_text() -> str:
 def main() -> int:
     text = re.sub(r"\s+", " ", render_text())
     failures = []
-    for expected in ("图引用 图 1-1", "表引用 表 1-1"):
+    for expected in ("章节引用 第 1 章", "图引用 图 1-1", "表引用 表 1-1", "完整检验结果见附录A"):
         if expected not in text:
             failures.append(expected)
 
