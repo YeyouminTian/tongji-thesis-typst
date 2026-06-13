@@ -190,6 +190,20 @@ Typst leading = Word 行距 − 字号
 
 内置引擎会用原始 BibTeX 字段覆盖 `citegeist` 对 `title`、`booktitle`、`journal` 等展示字段的大小写正规化，避免中文题名中的 `POI` 等缩略词被渲染为 `poi` 或 `Poi`。网页/在线资源的 URL 是 GB/T 7714 必备访问路径，`@online` 条目会显示 URL；普通文献仍受 `show-url: false` 控制。
 
+### 附录用法
+
+附录应使用模板提供的 `#appendix` 入口，而不是手写一级标题：
+
+```typst
+#appendix(label: <app:example>)[补充实验结果][
+  ...
+]
+```
+
+- 传入的标题应为**裸标题**，不要手写 `附录A` / `附录B`
+- 模板会自动在正文标题、页眉、目录和 `@app:...` 引用中补齐 `附录A`、`附录B` 等前缀
+- `label` 可选；若需要交叉引用，推荐使用 `app:` 前缀，如 `@app:example`
+
 ## License
 
 本项目仅供学习交流使用。同济大学学位论文格式版权归同济大学所有。

@@ -44,9 +44,14 @@
 #let appendix(title, body, label: none) = {
   pagebreak()
   counter("appendix").step()
-  let appendix-title = heading(numbering: none, supplement: appendix-supplement, outlined: true)[#title]
+  let appendix-title = context {
+    let nums = counter("appendix").get()
+    let appendix-number = nums.at(0, default: 0)
+    [附录#numbering("A", appendix-number)#h(0.3em)#title]
+  }
+  let appendix-heading = heading(numbering: none, supplement: appendix-supplement, outlined: true)[#title]
   page-style(numbering: "1", header: appendix-title, top-margin: 3.459cm, header-ascent: 0.929cm)[
-    #appendix-title#if label != none { label }
+    #appendix-heading#if label != none { label }
     #body
   ]
 }
