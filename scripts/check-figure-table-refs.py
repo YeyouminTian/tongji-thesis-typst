@@ -7,7 +7,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 
-ENTRY = r'''#import "/lib.typ": tongji-thesis, mainmatter, chapter
+ENTRY = r'''#import "/lib.typ": tongji-thesis, mainmatter, backmatter, chapter, appendix
 #import "/metadata.typ": thesis-info
 
 #show: body => tongji-thesis(info: thesis-info)[#body]
@@ -21,11 +21,12 @@ ENTRY = r'''#import "/lib.typ": tongji-thesis, mainmatter, chapter
     表引用 @tbl:test。
     完整检验结果见@app:kip-statistical-tests。
   ]
+]
 
-  #pagebreak()
-  #set heading(numbering: n => "附录" + numbering("A", n))
-  #counter(heading).update(0)
-  = KIP 消融实验完整统计检验结果 <app:kip-statistical-tests>
+#backmatter[
+  #appendix(label: <app:kip-statistical-tests>)[KIP 消融实验完整统计检验结果][
+    附录内容。
+  ]
 ]
 '''
 

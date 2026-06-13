@@ -40,10 +40,11 @@
   ]
 }
 
-#let appendix(title, body) = {
+#let appendix(title, body, label: none) = {
   pagebreak()
+  counter("appendix").step()
   page-style(numbering: "1", header: title, top-margin: 3.459cm, header-ascent: 0.929cm)[
-    #heading(numbering: none, outlined: true)[#title]
+    #heading(numbering: none, outlined: true)[#title]#if label != none { label }
     #body
   ]
 }
