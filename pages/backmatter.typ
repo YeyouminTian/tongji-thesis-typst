@@ -1,6 +1,7 @@
 #import "../vendor/gb7714-bilingual/lib.typ": gb7714-bibliography
 #import "../layouts/document.typ": page-style
 #import "../utils/typography.typ": fonts, size, rhythm
+#import "../utils/heading.typ": appendix-supplement
 
 #let references(items: (), bib: none, full: false) = {
   page-style(numbering: "1", header: [参考文献], top-margin: 3.459cm, header-ascent: 0.929cm)[
@@ -43,8 +44,9 @@
 #let appendix(title, body, label: none) = {
   pagebreak()
   counter("appendix").step()
-  page-style(numbering: "1", header: title, top-margin: 3.459cm, header-ascent: 0.929cm)[
-    #heading(numbering: none, outlined: true)[#title]#if label != none { label }
+  let appendix-title = heading(numbering: none, supplement: appendix-supplement, outlined: true)[#title]
+  page-style(numbering: "1", header: appendix-title, top-margin: 3.459cm, header-ascent: 0.929cm)[
+    #appendix-title#if label != none { label }
     #body
   ]
 }

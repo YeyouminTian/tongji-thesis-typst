@@ -1,6 +1,6 @@
 #import "../layouts/document.typ": page-style
 #import "../utils/typography.typ": fonts, size, rhythm
-#import "../utils/heading.typ": format-heading-number
+#import "../utils/heading.typ": appendix-number-text, format-heading-number, is-appendix-heading
 
 #let outline(depth: 3) = context {
   let elements = query(heading.where(outlined: true))
@@ -37,6 +37,9 @@
     let nums = counter(heading).at(el.location())
     let heading-number = if el.numbering != none {
       format-heading-number(el.level, nums)
+    } else if is-appendix-heading(el) {
+      let appendix-nums = counter("appendix").at(el.location())
+      appendix-number-text(appendix-nums)
     } else {
       []
     }

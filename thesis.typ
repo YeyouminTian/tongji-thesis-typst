@@ -57,7 +57,7 @@
 #backmatter[
   #references(bib: "references.bib")
 
-  #appendix[附录A 示例附录][
+  #appendix[示例附录][
     附录内容可放置调查问卷、补充图表、模型参数、额外实验结果或正文中过长的说明材料。附录中的图、
     表和公式可按“图A1”“表A1”等方式编号。
   ]

@@ -1,6 +1,7 @@
 #import "typography.typ": fonts
 
 #let chapter-state = state("chapter-number", 0)
+#let appendix-supplement = [附录]
 
 #let heading-numbering(..nums) = {
   let nums = nums.pos()
@@ -10,6 +11,16 @@
     nums.map(n => str(n)).join(".")
   }
 }
+
+#let appendix-number-text(nums) = {
+  if nums.len() == 0 {
+    []
+  } else {
+    [附录#numbering("A", nums.at(0))]
+  }
+}
+
+#let is-appendix-heading(it) = it.level == 1 and it.supplement == appendix-supplement
 
 #let format-heading-number(level, nums) = {
   if nums.len() == 0 {
@@ -41,7 +52,14 @@
 
 #let heading-text(it) = {
   if it.numbering == none {
-    it.body
+    if is-appendix-heading(it) {
+      context {
+        let nums = counter("appendix").at(it.location())
+        [#appendix-number-text(nums)#h(0.3em)#it.body]
+      }
+    } else {
+      it.body
+    }
   } else {
     context {
       let parts = heading-number-parts(it.level, counter(heading).get())
@@ -56,12 +74,22 @@
     []
   } else {
     let h = headings.last()
-    let nums = counter(heading).at(h.location())
-    let number = format-heading-number(1, nums)
-    if h.numbering != none and number != [] {
-      [#number #h.body]
+    if is-appendix-heading(h) {
+      let nums = counter("appendix").at(h.location())
+      let number = appendix-number-text(nums)
+      if number != [] {
+        [#number #h.body]
+      } else {
+        h.body
+      }
     } else {
-      h.body
+      let nums = counter(heading).at(h.location())
+      let number = format-heading-number(1, nums)
+      if h.numbering != none and number != [] {
+        [#number #h.body]
+      } else {
+        h.body
+      }
     }
   }
 }
