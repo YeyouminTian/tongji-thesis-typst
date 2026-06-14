@@ -3,23 +3,15 @@
 #let spread-label(label) = {
   let chars = str(label).clusters()
   let label-body = if chars.len() <= 4 {
-    let columns = ()
-    let cells = ()
-    for (index, char) in chars.enumerate() {
-      columns.push(auto)
-      cells.push(text(font: fonts.fang, size: size.san)[#char])
-      if index < chars.len() - 1 {
-        columns.push(1fr)
-        cells.push([])
-      }
-    }
+    // Spread characters across a fixed 6em width using inline `h(1fr)` gaps.
+    // Keeping the content inline (rather than wrapping a block-level grid in a
+    // box) preserves the text baseline, so the label sits on the same baseline
+    // as the trailing colon and the value.
     box(width: 6em)[
-      #grid(
-        columns: columns,
-        column-gutter: 0pt,
-        align: horizon,
-        ..cells
-      )
+      #for (index, char) in chars.enumerate() {
+        if index > 0 { h(1fr) }
+        text(font: fonts.fang, size: size.san)[#char]
+      }
     ]
   } else {
     text(font: fonts.fang, size: size.san)[#label]
