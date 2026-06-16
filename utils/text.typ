@@ -4,13 +4,12 @@
   let chars = str(label).clusters()
   let label-body = if chars.len() <= 4 {
     // Spread characters across a fixed 6em width using inline `h(1fr)` gaps.
-    // Keeping the content inline (rather than wrapping a block-level grid in a
-    // box) preserves the text baseline, so the label sits on the same baseline
-    // as the trailing colon and the value.
+    // Trim the text bottom edge to its baseline so the surrounding box aligns
+    // with the trailing colon and value instead of riding on font descenders.
     box(width: 6em)[
       #for (index, char) in chars.enumerate() {
         if index > 0 { h(1fr) }
-        text(font: fonts.fang, size: size.san)[#char]
+        text(font: fonts.fang, size: size.san, bottom-edge: "baseline")[#char]
       }
     ]
   } else {
