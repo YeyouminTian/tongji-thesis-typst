@@ -45,8 +45,9 @@
   let doi = f.at("doi", default: "")
   let mut = result
 
-  // 访问日期
-  if config.show-accessed {
+  // 访问日期：引用日期是「获取和访问路径」的一部分，仅在 URL 实际显示时才有意义。
+  // 非网页类型（article/book/standard 等）走此函数；网页类型在 webpage 渲染器内单独处理。
+  if config.show-accessed and config.show-url and url != "" {
     let accessed = format-accessed-date(entry)
     if accessed != "" {
       // 移除末尾句号以便添加访问日期
