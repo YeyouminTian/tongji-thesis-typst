@@ -113,9 +113,12 @@
         it
       } else {
         let heading-numbers = counter(heading).at(element.location())
-        let figure-numbers = counter(figure.where(kind: element.kind)).at(element.location())
+        let figured-kind = "i-figured-" + repr(element.kind)
+        let figure-numbers = counter(figure.where(kind: figured-kind)).at(element.location())
         let chapter_number = heading-numbers.at(0, default: 0)
-        let item_number = figure-numbers.at(0, default: 0)
+        // The counter value at the original figure location is the value
+        // before i-figured steps the rewritten figure counter.
+        let item_number = figure-numbers.at(0, default: 0) + 1
         let ref_number = str(chapter_number) + "-" + str(item_number)
         text(font: fonts.song + fonts.en, size: size.xiaosi, cjk-latin-spacing: none)[#supplement #ref_number]
       }
@@ -138,6 +141,11 @@
   )
 
   show heading.where(level: 1): it => {
+    // The custom level-1 renderer below consumes the original heading, so the
+    // earlier generic `show heading: i-figured.reset-counters` rule does not
+    // reliably run for chapter headings. Reset i-figured counters explicitly
+    // here to keep figure/table/equation numbering chapter-local.
+    i-figured.reset-counters(it, return-orig-heading: false)
     block(above: heading-spacing.level-1-before, below: 0pt, breakable: false, width: 100%)[
       #set par(first-line-indent: rhythm.no-indent, leading: rhythm.heading-leading, spacing: rhythm.no-spacing, justify: false)
       #align(center)[
