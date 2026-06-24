@@ -66,8 +66,10 @@
     #align(center)[
       #block(width: 13.8cm)[
         #align(center)[
-          #text(font: fonts.hei, size: size.er, stroke: 0.4pt)[
-            #get(info, "title", default: "中文论文题目")
+          #par(leading: 11pt)[
+            #text(font: fonts.hei, size: size.er, stroke: 0.4pt)[
+              #get(info, "title", default: "中文论文题目")
+            ]
           ]
         ]
       ]

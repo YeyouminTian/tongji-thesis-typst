@@ -7,6 +7,9 @@
   let nums = nums.pos()
   if nums.len() == 1 {
     str(nums.at(0))
+  } else if nums.len() == 4 {
+    // 四级标题使用 (1), (2), (3) 格式
+    "(" + str(nums.at(3)) + ")"
   } else {
     nums.map(n => str(n)).join(".")
   }
@@ -27,6 +30,9 @@
     []
   } else if level == 1 {
     "第 " + str(nums.at(0)) + " 章"
+  } else if level == 4 {
+    // 四级标题使用 (1), (2), (3) 格式
+    "(" + str(nums.at(3)) + ")"
   } else {
     nums.slice(0, calc.min(level, nums.len())).map(n => str(n)).join(".")
   }
@@ -37,6 +43,9 @@
     (prefix: [], number: [], suffix: [])
   } else if level == 1 {
     (prefix: "第 ", number: str(nums.at(0)), suffix: " 章")
+  } else if level == 4 {
+    // 四级标题使用 (1), (2), (3) 格式
+    (prefix: "(", number: str(nums.at(3)), suffix: ")")
   } else {
     (prefix: [], number: nums.slice(0, calc.min(level, nums.len())).map(n => str(n)).join("."), suffix: [])
   }
