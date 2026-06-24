@@ -44,7 +44,7 @@
       []
     }
 
-    block(width: 100%, above: 0pt, below: 2.2pt)[
+    block(width: 100%, above: 0pt, below: 6pt)[
       #set text(font: fonts.song + fonts.en, size: size.xiaosi, top-edge: 0.7em, bottom-edge: -0.3em)
       #set par(first-line-indent: rhythm.no-indent, leading: rhythm.toc-leading, spacing: rhythm.no-spacing, justify: false)
       #h(indent)
@@ -63,7 +63,7 @@
     // Page-top heading spacing is calibrated against the official TOC page.
     #v(8pt, weak: false)
     #heading(numbering: none, outlined: false)[目录]
-    #v(9.8pt)
+    #v(13pt)
     #set par(first-line-indent: rhythm.no-indent, leading: rhythm.toc-leading, spacing: rhythm.no-spacing, justify: false)
     #outline(depth: 3)
     #pagebreak()
