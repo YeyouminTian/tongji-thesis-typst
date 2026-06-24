@@ -44,7 +44,7 @@
       []
     }
 
-    block(width: 100%, above: 0pt, below: 3.4pt)[
+    block(width: 100%, above: 0pt, below: 3pt)[
       #set text(font: fonts.song + fonts.en, size: size.xiaosi, top-edge: 0.7em, bottom-edge: -0.3em)
       #set par(first-line-indent: rhythm.no-indent, leading: rhythm.toc-leading, spacing: rhythm.no-spacing, justify: false)
       #h(indent)
