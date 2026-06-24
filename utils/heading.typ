@@ -72,7 +72,12 @@
   } else {
     context {
       let parts = heading-number-parts(it.level, counter(heading).get())
-      [#heading-number-text(parts)#h(0.3em)#it.body]
+      if it.level == 4 {
+        // 四级标题使用宋体编号，与标题正文字体一致
+        [#text(font: fonts.song, cjk-latin-spacing: none)[#parts.prefix#parts.number#parts.suffix]#h(0.3em)#it.body]
+      } else {
+        [#heading-number-text(parts)#h(0.3em)#it.body]
+      }
     }
   }
 }

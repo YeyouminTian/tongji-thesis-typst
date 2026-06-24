@@ -175,7 +175,7 @@
   show heading.where(level: 4): it => {
     block(above: 24pt, below: 18pt, breakable: false, width: 100%)[
       #set par(first-line-indent: rhythm.no-indent, leading: rhythm.heading-leading, spacing: rhythm.no-spacing, justify: false)
-      #text(font: fonts.hei-cn, size: size.xiaosi, cjk-latin-spacing: none)[#heading-text(it)]
+      #text(font: fonts.song, size: size.xiaosi, weight: "bold", cjk-latin-spacing: none)[#heading-text(it)]
     ]
   }
 
