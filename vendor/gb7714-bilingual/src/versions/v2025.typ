@@ -4,18 +4,28 @@
   // 版本标识
   version: "2025",
   name: "GB/T 7714—2025",
-  // 标点符号（2025 统一使用中文全角标点）
+  // 标点符号按文献语种选择。2025 版英文示例仍使用英文半角标点。
   punctuation: (
-    comma: "，",
-    colon: "：",
-    lparen: "（",
-    rparen: "）",
+    zh: (
+      comma: "，",
+      colon: "：",
+      lparen: "（",
+      rparen: "）",
+    ),
+    en: (
+      comma: ", ",
+      colon: ": ",
+      lparen: "(",
+      rparen: ")",
+    ),
   ),
   // 作者格式化规则
   author-format: (
     family-uppercase: false, // 姓不大写（Smith）
     hyphen-to-space: false, // 保留连字符（J-P）
-    delimiter: "，", // 作者分隔符
+    delimiter: "，",
+    delimiter-zh: "，",
+    delimiter-en: ", ",
   ),
   // 条目类型规则
   entry-type-rules: (
@@ -45,19 +55,30 @@
     "dataset": "DS",
     "map": "CM",
     "software": "CP",
+    "database": "DB",
     "online": "EB",
     "webpage": "EB",
+    "website": "EB",
     "unpublished": "Z",
     "archive": "A",
     "misc": "Z",
   ),
   // 正文引用格式
   citation: (
-    lparen: "（",
-    rparen: "）",
-    author-year-sep: "，",
-    multi-sep: "；",
-    locator-sep: "：", // 页码分隔符（年份和页码之间）
+    zh: (
+      lparen: "（",
+      rparen: "）",
+      author-year-sep: "，",
+      multi-sep: "；",
+      locator-sep: "：",
+    ),
+    en: (
+      lparen: "(",
+      rparen: ")",
+      author-year-sep: ", ",
+      multi-sep: "; ",
+      locator-sep: ": ",
+    ),
   ),
   // 术语（中文）
   terms-zh: (

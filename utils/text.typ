@@ -20,7 +20,7 @@
 }
 
 #let cover-strong(font, size, body) = {
-  text(font: font, size: size, weight: "bold", fill: black, stroke: 0.18pt + black)[#body]
+  text(font: font, size: size, weight: "bold", fill: black, stroke: 0.8pt + black)[#body]
 }
 
 #let vertical-text(value, font: fonts.fang, size: size.si, weight: "bold") = {

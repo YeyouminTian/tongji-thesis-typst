@@ -1,6 +1,6 @@
 // GB/T 7714 双语参考文献系统 - 期刊文章渲染器
 
-#import "../authors.typ": format-authors
+#import "../authors.typ": format-entry-authors
 #import "../types.typ": render-type-id
 #import "../versions/mod.typ": get-punctuation
 #import "../core/utils.typ": build-journal-info, render-base
@@ -19,7 +19,12 @@
   let f = entry.fields
   let entry-type = lower(entry.entry_type)
 
-  let authors = format-authors(entry.parsed_names, lang, version: version)
+  let authors = format-entry-authors(
+    entry.parsed_names,
+    lang,
+    style,
+    version: version,
+  )
   let title = f.at("title", default: "")
   let journal = f.at("journal", default: f.at("journaltitle", default: ""))
   let year = str(f.at("year", default: "")) + year-suffix

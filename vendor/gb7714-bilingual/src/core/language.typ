@@ -41,3 +41,72 @@
   // 默认为英文
   return "en"
 }
+
+/// 检测著者-出版年制参考文献表的文种分组。
+/// GB/T 7714—2025 9.3.2 的顺序为：中文、日文、西文、俄文、其他文种。
+#let detect-language-group(entry) = {
+  let fields = entry.at("fields", default: (:))
+  let declared = lower(
+    fields.at("language", default: fields.at("langid", default: "")),
+  )
+
+  if (
+    "zh" in declared
+      or "chinese" in declared
+      or "中文" in declared
+      or "中" == declared
+  ) {
+    return "zh"
+  }
+  if (
+    "ja" in declared
+      or "japanese" in declared
+      or "日文" in declared
+      or "日语" in declared
+  ) {
+    return "ja"
+  }
+  if (
+    "ru" in declared
+      or "russian" in declared
+      or "俄文" in declared
+      or "俄语" in declared
+  ) {
+    return "ru"
+  }
+  if (
+    "en" in declared
+      or "english" in declared
+      or "de" in declared
+      or "german" in declared
+      or "fr" in declared
+      or "french" in declared
+      or "es" in declared
+      or "spanish" in declared
+      or "western" in declared
+      or "西文" in declared
+  ) {
+    return "western"
+  }
+  if declared != "" {
+    return "other"
+  }
+
+  let title = fields.at("title", default: "")
+  let author = fields.at("author", default: "")
+  let text-to-check = title + author
+
+  if text-to-check.find(regex("[ぁ-ゟ゠-ヿ]")) != none {
+    return "ja"
+  }
+  if text-to-check.find(regex("\p{Cyrillic}")) != none {
+    return "ru"
+  }
+  if text-to-check.find(regex("\p{Han}{2,}")) != none {
+    return "zh"
+  }
+  if text-to-check.find(regex("[A-Za-z]")) != none {
+    return "western"
+  }
+  "other"
+}

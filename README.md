@@ -9,7 +9,7 @@
 - 中英文封面、书脊自动生成
 - 中英文摘要页
 - 自动生成目录
-- GB/T 7714—2015 数字编码制参考文献（基于 gb7714-bilingual 引擎，中英文混排自动切换"等"/"et al."）
+- GB/T 7714—2015/2025 数字编码制参考文献（默认 2025，可切换；中英文混排自动切换“等”/“et al.”）
 - 图、表、公式按章节自动编号（基于 i-figured 包），正文 `@fig:` / `@tbl:` 引用自动显示为“图 2-1”“表 2-1”并使用正文同款字体字号
 - 原创性声明与版权授权书
 - 附录、致谢、简历与发表成果页
@@ -104,6 +104,15 @@ typst compile full-preview.typ full-preview.pdf
 }
 ```
 
+标准版本在 [metadata.typ](metadata.typ) 中统一配置：
+
+```typst
+#let bibliography-standard-version = "2025"
+```
+
+改为 `"2015"` 即可兼容旧稿。GB/T 7714—2025 于 2025-12-02 发布、2026-07-01 实施；
+具体差异见 [GB/T 7714—2025 支持与迁移说明](docs/gb-t-7714-2025.md)。
+
 使用 `language = {zh-CN}` 或 `language = {en-US}` 标记文献语言，以确保作者截断时正确显示"等"或"et al."。
 
 网页/在线资源使用 `@online`，并填写 `url` 和 `urldate`。即使模板入口保持 `show-url: false` 以隐藏普通期刊论文的 URL，`@online` 条目仍会按 GB/T 7714 格式显示访问路径：
@@ -184,11 +193,18 @@ Typst leading = Word 行距 − 字号
 
 ```typst
 #import "vendor/gb7714-bilingual/lib.typ": init-gb7714
+#import "metadata.typ": bibliography-standard-version
 
-#show: init-gb7714.with(read("references.bib"), style: "numeric", version: "2015", show-url: false, show-doi: false)
+#show: init-gb7714.with(
+  read("references.bib"),
+  style: "numeric",
+  version: bibliography-standard-version,
+  show-url: false,
+  show-doi: false,
+)
 ```
 
-内置引擎会用原始 BibTeX 字段覆盖 `citegeist` 对 `title`、`booktitle`、`journal` 等展示字段的大小写正规化，避免中文题名中的 `POI` 等缩略词被渲染为 `poi` 或 `Poi`。网页/在线资源的 URL 是 GB/T 7714 必备访问路径，`@online` 条目会显示 URL；普通文献仍受 `show-url: false` 控制。
+内置引擎会用原始 BibTeX 字段覆盖 `citegeist` 对 `title`、`booktitle`、`journal` 等展示字段的大小写正规化，避免中文题名中的 `POI` 等缩略词被渲染为 `poi` 或 `Poi`。网页/在线资源的 URL 是 GB/T 7714 必备访问路径，`@online` 条目会显示 URL；普通文献仍受 `show-url: false` 控制。电子版图书、期刊、报告等应显式填写 `medium = {OL}`。
 
 ### 附录用法
 

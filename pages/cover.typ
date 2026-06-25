@@ -147,31 +147,33 @@
       ]
     ]
 
-    #v(2.15cm)
-    #align(center)[
-      #grid(
-        columns: (5.8cm, 8.6cm),
-        rows: auto,
-        column-gutter: 0.2cm,
-        row-gutter: 0.31cm,
-        align: left,
-        text(font: fonts.en, size: size.san)[Candidate:],
-        text(font: fonts.en, size: size.san)[#get(info, "author_en")],
-        text(font: fonts.en, size: size.san)[Student Number:],
-        text(font: fonts.en, size: size.san)[#get(info, "student_id")],
-        text(font: fonts.en, size: size.san)[School/Department:],
-        text(font: fonts.en, size: size.san)[#get(info, "school_en")],
-        text(font: fonts.en, size: size.san)[Categories:],
-        text(font: fonts.en, size: size.san)[#get(info, "discipline_category_en")],
-        text(font: fonts.en, size: size.san)[First-level Discipline:],
-        text(font: fonts.en, size: size.san)[#get(info, "first_level_discipline_en")],
-        text(font: fonts.en, size: size.san)[Second-level Discipline:],
-        text(font: fonts.en, size: size.san)[#get(info, "second_level_discipline_en")],
-        text(font: fonts.en, size: size.san)[Research Fields:],
-        text(font: fonts.en, size: size.san)[#get(info, "research_direction_en")],
-        text(font: fonts.en, size: size.san)[Supervisor:],
-        text(font: fonts.en, size: size.san)[#get(info, "supervisor_en")],
-      )
+    #v(4.49cm)
+    #align(left)[
+      #move(dx: 2.95cm)[
+        #grid(
+          columns: (5.8cm, 8.6cm),
+          rows: auto,
+          column-gutter: 0.2cm,
+          row-gutter: 0.536cm,
+          align: left,
+          text(font: fonts.en, size: size.san)[Candidate:],
+          text(font: fonts.en, size: size.san)[#get(info, "author_en")],
+          text(font: fonts.en, size: size.san)[Student Number:],
+          text(font: fonts.en, size: size.san)[#get(info, "student_id")],
+          text(font: fonts.en, size: size.san)[School/Department:],
+          text(font: fonts.en, size: size.san)[#get(info, "school_en")],
+          text(font: fonts.en, size: size.san)[Categories:],
+          text(font: fonts.en, size: size.san)[#get(info, "discipline_category_en")],
+          text(font: fonts.en, size: size.san)[First-level Discipline:],
+          text(font: fonts.en, size: size.san)[#get(info, "first_level_discipline_en")],
+          text(font: fonts.en, size: size.san)[Second-level Discipline:],
+          text(font: fonts.en, size: size.san)[#get(info, "second_level_discipline_en")],
+          text(font: fonts.en, size: size.san)[Research Fields:],
+          text(font: fonts.en, size: size.san)[#get(info, "research_direction_en")],
+          text(font: fonts.en, size: size.san)[Supervisor:],
+          text(font: fonts.en, size: size.san)[#get(info, "supervisor_en")],
+        )
+      ]
     ]
 
     #v(1fr)

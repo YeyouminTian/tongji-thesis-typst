@@ -52,6 +52,22 @@
 
   let parts = ()
 
+  if version == "2025" {
+    // 2025 版 8.9：标准编号、标准名称、类型/载体标识；
+    // 不再著录责任者、出版地、出版者和出版年。
+    let title-part = if number != "" {
+      number + " " + title + type-id
+    } else {
+      title + type-id
+    }
+    return append-access-info(
+      smart-join((title-part,)),
+      entry,
+      config: config,
+      version: version,
+    )
+  }
+
   // 根据版本规则决定是否显示作者
   if type-rules.standard-has-author {
     if style == "author-date" {
@@ -91,5 +107,5 @@
   }
 
   let result = smart-join(parts)
-  append-access-info(result, entry, config: config)
+  append-access-info(result, entry, config: config, version: version)
 }

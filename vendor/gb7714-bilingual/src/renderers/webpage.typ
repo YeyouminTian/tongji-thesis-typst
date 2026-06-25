@@ -1,6 +1,6 @@
 // GB/T 7714 双语参考文献系统 - 网页/电子资源渲染器
 
-#import "../authors.typ": format-authors
+#import "../authors.typ": format-entry-authors
 #import "../types.typ": render-type-id
 #import "../versions/mod.typ": get-punctuation, get-terms
 #import "../core/utils.typ": (
@@ -20,15 +20,25 @@
   let f = entry.fields
   let terms = get-terms(version, lang)
 
-  let authors = format-authors(entry.parsed_names, lang, version: version)
+  let authors = format-entry-authors(
+    entry.parsed_names,
+    lang,
+    style,
+    version: version,
+  )
   let title = f.at("title", default: "")
   let year = str(f.at("year", default: "")) + year-suffix
   // 发布日期
-  let date = f.at("date", default: "")
+  let date = f.at("date", default: f.at("year", default: ""))
   let url = f.at("url", default: "")
   let note = f.at("note", default: "")
   let mark = f.at("_resolved_mark", default: none)
-  let medium = f.at("_resolved_medium", default: none)
+  let explicit-medium = f.at("_resolved_medium", default: none)
+  let medium = if explicit-medium == none and version == "2025" {
+    "OL"
+  } else {
+    explicit-medium
+  }
 
   // 网页默认是 EB/OL
   let type-id = render-type-id(
@@ -89,7 +99,12 @@
 
   // DOI
   let doi = f.at("doi", default: "")
-  if config.show-doi and doi != "" {
+  let doi-already-in-url = (
+    doi != ""
+      and url != ""
+      and lower(url).contains(lower(doi))
+  )
+  if config.show-doi and doi != "" and not doi-already-in-url {
     let doi-link = link("https://doi.org/" + doi, [DOI: #doi])
     result = [#result #doi-link]
   }

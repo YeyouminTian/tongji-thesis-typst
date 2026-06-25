@@ -1,6 +1,6 @@
 // GB/T 7714 双语参考文献系统 - 会议论文渲染器
 
-#import "../authors.typ": format-authors
+#import "../authors.typ": format-authors, format-entry-authors
 #import "../types.typ": render-type-id
 #import "../versions/mod.typ": get-punctuation, get-terms
 #import "../core/utils.typ": append-access-info, build-author-year, smart-join
@@ -22,13 +22,21 @@
   let f = entry.fields
   let terms = get-terms(version, lang)
 
-  let authors = format-authors(entry.parsed_names, lang, version: version)
+  let authors = format-entry-authors(
+    entry.parsed_names,
+    lang,
+    style,
+    version: version,
+  )
   let title = f.at("title", default: "")
-  // 2025 优先使用 eventtitle（会议名称），2015 使用 booktitle
-  let booktitle = if version == "2025" {
-    f.at("eventtitle", default: f.at("booktitle", default: ""))
+  let eventtitle = f.at("eventtitle", default: "")
+  let booktitle-field = f.at("booktitle", default: "")
+  // 2025 的独立会议录优先使用 eventtitle；正式出版的会议论文仍按
+  // “图书中的析出文献”格式处理。
+  let booktitle = if version == "2025" and eventtitle != "" {
+    eventtitle
   } else {
-    f.at("booktitle", default: f.at("eventtitle", default: ""))
+    if booktitle-field != "" { booktitle-field } else { eventtitle }
   }
   let year = str(f.at("year", default: "")) + year-suffix
   let pages = f.at("pages", default: "").replace("--", "-")
@@ -96,18 +104,62 @@
       parts.push(pub-info)
     }
   } else {
-    // 2025: 题名[C]//会议名称，日期：页码（全在一个 part 内）
-    let conf-info = title + type-id + "//" + booktitle
-    // 年份（numeric 或作者为空的 author-date）
-    if year-in-pub and year != "" {
-      conf-info += punct.comma + year
+    let is-analytic = booktitle-field != "" and eventtitle == ""
+    if is-analytic {
+      // 2025 版 8.3：正式出版的会议论文按图书析出文献著录。
+      let source-authors = ""
+      let editor-names = entry.parsed_names.at("editor", default: ())
+      if editor-names.len() > 0 {
+        source-authors = format-authors(
+          (author: editor-names),
+          lang,
+          version: version,
+          allow-anonymous: false,
+        )
+      }
+
+      let analytic = title + type-id + "//"
+      if source-authors != "" {
+        analytic += source-authors + ". "
+      }
+      analytic += booktitle-field
+      parts.push(analytic)
+
+      let pub-info = ""
+      if address != "" {
+        pub-info += address
+        if publisher != "" {
+          pub-info += punct.colon
+        }
+      }
+      if publisher != "" {
+        pub-info += publisher
+      }
+      if year-in-pub and year != "" {
+        if pub-info != "" {
+          pub-info += punct.comma
+        }
+        pub-info += year
+      }
+      if pages != "" {
+        pub-info += punct.colon + pages
+      }
+      if pub-info != "" {
+        parts.push(pub-info)
+      }
+    } else {
+      // 2025 版 8.6：未按图书/期刊出版的会议录。
+      let conf-info = title + type-id + "//" + booktitle
+      if year-in-pub and year != "" {
+        conf-info += punct.comma + year
+      }
+      if pages != "" {
+        conf-info += punct.colon + pages
+      }
+      parts.push(conf-info)
     }
-    if pages != "" {
-      conf-info += punct.colon + pages
-    }
-    parts.push(conf-info)
   }
 
   let result = smart-join(parts)
-  append-access-info(result, entry, config: config)
+  append-access-info(result, entry, config: config, version: version)
 }

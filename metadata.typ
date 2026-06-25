@@ -1,3 +1,5 @@
+#let bibliography-standard-version = "2025"
+
 #let thesis-info = (
   degree: "硕士",
   degree_type: "学术学位",

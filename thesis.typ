@@ -1,8 +1,14 @@
 #import "vendor/gb7714-bilingual/lib.typ": init-gb7714
 #import "lib.typ": *
-#import "metadata.typ": thesis-info
+#import "metadata.typ": bibliography-standard-version, thesis-info
 
-#show: init-gb7714.with(read("references.bib"), style: "numeric", version: "2015", show-url: false, show-doi: false)
+#show: init-gb7714.with(
+  read("references.bib"),
+  style: "numeric",
+  version: bibliography-standard-version,
+  show-url: false,
+  show-doi: false,
+)
 #show: body => tongji-thesis(info: thesis-info)[#body]
 
 #chinese-cover(thesis-info)

@@ -33,10 +33,11 @@
   let terms = get-terms(version, lang)
   let rules = get-author-format-rules(version)
 
-  // 作者分隔符：根据版本选择（CSL 规范）
-  // 2015: 默认英文逗号 ", "
-  // 2025: 中文逗号 "，"（<name delimiter="，"/>）
-  let delimiter = if version == "2025" { "，" } else { ", " }
+  // 作者分隔符按标准版本与文献语种选择。
+  let delimiter = rules.at(
+    "delimiter-" + lang,
+    default: rules.at("delimiter", default: ", "),
+  )
 
   // 格式化单个名字
   let format-name(name) = {
@@ -105,6 +106,17 @@
         + terms.et-al
     )
   }
+}
+
+/// 格式化参考文献表中的主要责任者。
+/// 2025 版顺序编码制允许无责任者文献直接从题名开始（7.1.3）。
+#let format-entry-authors(parsed-names, lang, style, version: "2025") = {
+  format-authors(
+    parsed-names,
+    lang,
+    version: version,
+    allow-anonymous: not (version == "2025" and style == "numeric"),
+  )
 }
 
 /// 格式化正文引用中的作者（简短形式）

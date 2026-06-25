@@ -1,6 +1,6 @@
 // GB/T 7714 双语参考文献系统 - 书籍渲染器
 
-#import "../authors.typ": format-authors
+#import "../authors.typ": format-authors, format-entry-authors
 #import "../types.typ": render-type-id
 #import "../versions/mod.typ": get-punctuation, get-terms
 #import "../core/utils.typ": append-pages, build-pub-info, render-base
@@ -20,7 +20,12 @@
   let terms = get-terms(version, lang)
   let entry-type = lower(entry.entry_type)
 
-  let authors = format-authors(entry.parsed_names, lang, version: version)
+  let authors = format-entry-authors(
+    entry.parsed_names,
+    lang,
+    style,
+    version: version,
+  )
   let title = f.at("title", default: "")
   let booktitle = f.at("booktitle", default: "") // 析出文献的主书名
   let edition = f.at("edition", default: "")

@@ -7,6 +7,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+
+- GB/T 7714—2025 dedicated renderers for archives, maps, datasets, and preprints
+- GB/T 7714—2025 language-group sorting for author-date bibliographies (Chinese, Japanese, Western, Russian, other)
+- `MM` carrier support through the existing `medium` field and `database`/`website` type mappings
+
+### Changed
+
+- 2025 punctuation and author delimiters now follow the bibliography entry language instead of forcing Chinese punctuation on English entries
+- 2025 standards now render as `standard number + standard title + [S]`, without 2015 publication fields
+- 2025 reports, conference proceedings, websites/webpages, datasets, and preprints follow their dedicated date and access-path formats
+- 2025 citation locators render outside numeric brackets and author-date parentheses, as required by 9.2.1.3 and 9.3.1.4
+- URLs that already contain the DOI no longer repeat the DOI
+
+### Fixed
+
+- `mark = {A}` now resolves to archive rather than preprint; 2025 preprints use `PP`
+- Numeric 2025 entries without a responsible person start from the title instead of inserting `佚名`
+
 ## [0.2.3] - 2026-03-27
 
 ### Added

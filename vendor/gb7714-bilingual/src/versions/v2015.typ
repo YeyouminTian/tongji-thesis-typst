@@ -16,6 +16,8 @@
     family-uppercase: false, // 姓不大写（Smith）
     hyphen-to-space: true, // 连字符展开（J P）
     delimiter: ", ", // 作者分隔符
+    delimiter-zh: ", ",
+    delimiter-en: ", ",
   ),
   // 条目类型规则
   entry-type-rules: (
@@ -45,8 +47,10 @@
     "dataset": "DS",
     "map": "CM",
     "software": "CP",
+    "database": "DB",
     "online": "EB",
     "webpage": "EB",
+    "website": "EB",
     "unpublished": "Z",
     "archive": "A",
     "misc": "Z",

@@ -26,13 +26,15 @@
 }
 
 /// 根据版本获取引用格式配置
-#let get-citation-config(version) = {
-  get-version-config(version).citation
+#let get-citation-config(version, lang: "zh") = {
+  let citation = get-version-config(version).citation
+  citation.at(lang, default: citation)
 }
 
 /// 获取标点符号配置
 #let get-punctuation(version, lang) = {
-  get-version-config(version).punctuation
+  let punctuation = get-version-config(version).punctuation
+  punctuation.at(lang, default: punctuation)
 }
 
 /// 获取作者格式化规则

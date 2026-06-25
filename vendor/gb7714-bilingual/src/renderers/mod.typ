@@ -9,6 +9,9 @@
 #import "report.typ": render-report
 #import "webpage.typ": render-webpage
 #import "misc.typ": render-misc
+#import "special.typ": (
+  render-archive, render-dataset, render-map, render-preprint,
+)
 
 // 类型 -> 渲染函数映射
 #let _renderers = (
@@ -41,7 +44,12 @@
   // 网页/在线资源
   "online": render-webpage,
   "webpage": render-webpage,
+  "website": render-webpage,
   "www": render-webpage,
+  // 2025 独立类型
+  "archive": render-archive,
+  "map": render-map,
+  "dataset": render-dataset,
 )
 
 // 检测是否为标准（citegeist 不支持 @standard，返回 unknown）
@@ -149,9 +157,9 @@
       "EB": "online",
       "DB": "misc", // 数据库，使用 misc 渲染但 mark 会被传递
       "CP": "misc", // 计算机程序
-      "CM": "misc", // 地图
-      "DS": "misc", // 数据集
-      "A": "preprint", // 档案/预印本
+      "CM": "map",
+      "DS": "dataset",
+      "A": "archive",
       "PP": "preprint", // 预印本（2025）
       "Z": "misc", // 其他
     )
@@ -175,7 +183,15 @@
   }
 
   // 查找渲染函数，未找到则使用 misc
-  let renderer = _renderers.at(entry-type, default: render-misc)
+  let renderer = if entry-type == "preprint" {
+    if version == "2025" { render-preprint } else { render-article }
+  } else if (
+    version == "2015" and entry-type in ("archive", "map", "dataset")
+  ) {
+    render-misc
+  } else {
+    _renderers.at(entry-type, default: render-misc)
+  }
 
   // 创建带有正确类型和 medium 的 entry 副本
   let entry-with-type = entry

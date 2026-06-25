@@ -39,6 +39,7 @@
   result,
   entry,
   config: (show-url: true, show-doi: true, show-accessed: true),
+  version: "2015",
 ) = {
   let f = entry.at("fields", default: (:))
   let url = f.at("url", default: "")
@@ -77,7 +78,12 @@
   }
 
   // DOI (可点击链接)
-  if config.show-doi and doi != "" {
+  let doi-already-in-url = (
+    doi != ""
+      and url != ""
+      and lower(url).contains(lower(doi))
+  )
+  if config.show-doi and doi != "" and not doi-already-in-url {
     let doi-link = link("https://doi.org/" + doi, [DOI: #doi])
     if type(mut) == str {
       mut += " " + doi-link + "."

@@ -1,6 +1,6 @@
 // GB/T 7714 双语参考文献系统 - 学位论文渲染器
 
-#import "../authors.typ": format-authors
+#import "../authors.typ": format-entry-authors
 #import "../types.typ": render-type-id
 #import "../versions/mod.typ": get-punctuation
 #import "../core/utils.typ": append-pages, build-pub-info, render-base
@@ -17,7 +17,12 @@
 ) = {
   let f = entry.fields
 
-  let authors = format-authors(entry.parsed_names, lang, version: version)
+  let authors = format-entry-authors(
+    entry.parsed_names,
+    lang,
+    style,
+    version: version,
+  )
   let title = f.at("title", default: "")
   let school = f.at("school", default: f.at("institution", default: ""))
   let year = str(f.at("year", default: "")) + year-suffix
