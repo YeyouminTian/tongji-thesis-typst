@@ -138,8 +138,10 @@
     #align(center)[
       #block(width: 14.2cm)[
         #align(center)[
-          #text(font: fonts.arial, size: size.xiaoer, weight: "bold")[
-            #get(info, "title_en", default: "English Thesis Title")
+          #par(leading: 11pt)[
+            #text(font: fonts.arial, size: size.xiaoer, weight: "bold")[
+              #get(info, "title_en", default: "English Thesis Title")
+            ]
           ]
         ]
       ]
