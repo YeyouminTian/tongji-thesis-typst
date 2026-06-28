@@ -6,7 +6,7 @@
   hei-cn: ((name: "Arial", covers: "latin-in-cjk"), "Source Han Sans SC", "Source Han Sans", "Noto Sans CJK SC", "SimHei", "Heiti SC", "STHeiti"),
   hei-strict: ("Source Han Sans SC", "Source Han Sans", "Noto Sans CJK SC", "SimHei", "Heiti SC", "STHeiti"),
   fang: ((name: "Times New Roman", covers: "latin-in-cjk"), "FangSong", "FangSong SC", "STFangSong", "FZFangSong-Z02S"),
-  li: ("Libian SC", "Baoli SC", "Kaiti SC", "STKaiti"),
+  li: ("LiSu", "Baoli SC", "Kaiti SC", "STKaiti"),
   kai: ((name: "Times New Roman", covers: "latin-in-cjk"), "KaiTi", "Kaiti SC", "STKaiti", "FZKai-Z03S"),
   en: ("Times New Roman", "Times", "Libertinus Serif"),
   arial: ("Arial", "Helvetica"),

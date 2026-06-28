@@ -50,19 +50,22 @@
   page-style(numbering: none, header: none)[
     #set par(first-line-indent: rhythm.no-indent, leading: rhythm.cover-leading, spacing: rhythm.no-spacing, justify: false)
 
-    #v(0.1cm)
+    #v(1.16cm)
     #align(center)[#logo(info)]
 
-    #v(8pt)
+    #v(30.14pt)
     #align(center)[
       #cover-strong(fonts.li, size.er, thesis-kind(info))
-      #linebreak()
+    ]
+
+    #v(17.96pt)
+    #align(center)[
       #if degree-type(info) != none {
         cover-strong(fonts.li, size.san, degree-type(info))
       }
     ]
 
-    #v(1.15cm)
+    #v(1.61cm)
     #align(center)[
       #block(width: 13.8cm)[
         #align(center)[
@@ -75,14 +78,14 @@
       ]
     ]
 
-    #v(4cm)
+    #v(3.96cm)
     #align(center)[
       #block(width: 15.8cm)[
-        #pad(left: 8.5em)[
+        #pad(left: 8.7em)[
           #grid(
             columns: (100%,),
             rows: auto,
-            row-gutter: 0.42cm,
+            row-gutter: 0.536cm,
             align: left + horizon,
             metadata-line("姓名", get(info, "author")),
             metadata-line("学号", get(info, "student_id")),

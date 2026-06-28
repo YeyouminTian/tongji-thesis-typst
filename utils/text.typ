@@ -2,11 +2,12 @@
 
 #let spread-label(label) = {
   let chars = str(label).clusters()
-  let label-body = if chars.len() <= 4 {
-    // Spread characters across a fixed 6em width using inline `h(1fr)` gaps.
+  let label-body = if chars.len() == 2 {
+    // Spread two-character cover labels so their colon aligns with
+    // four-character labels in the school reference cover.
     // Trim the text bottom edge to its baseline so the surrounding box aligns
     // with the trailing colon and value instead of riding on font descenders.
-    box(width: 6em)[
+    box(width: 64pt)[
       #for (index, char) in chars.enumerate() {
         if index > 0 { h(1fr) }
         text(font: fonts.fang, size: size.san, bottom-edge: "baseline")[#char]
