@@ -61,7 +61,7 @@ language = {zh-CN}
 
 TYP = """#import "../vendor/gb7714-bilingual/lib.typ": init-gb7714, gb7714-bibliography
 #set text(font: ("Times New Roman", "SimSun"), size: 10pt)
-#show: init-gb7714.with(read("refs.bib"), style: "numeric", version: "2015", show-url: false, show-doi: false)
+#show: init-gb7714.with(read("refs.bib"), style: "numeric", version: "2025", show-url: false, show-doi: false)
 
 #cite(<RDDD202004007>)
 #cite(<poi_first>)

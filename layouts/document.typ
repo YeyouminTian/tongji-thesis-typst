@@ -173,7 +173,8 @@
   }
 
   show heading.where(level: 4): it => {
-    block(above: 24pt, below: 18pt, breakable: false, width: 100%)[
+    // 四级标题为小四宋体加粗（与正文同字号），其上下段落间隔与正文段间距一致（8pt）。
+    block(above: rhythm.body-spacing, below: rhythm.body-spacing, breakable: false, width: 100%)[
       #set par(first-line-indent: rhythm.no-indent, leading: rhythm.heading-leading, spacing: rhythm.no-spacing, justify: false)
       #text(font: fonts.song, size: size.xiaosi, weight: "bold", cjk-latin-spacing: none)[#heading-text(it)]
     ]

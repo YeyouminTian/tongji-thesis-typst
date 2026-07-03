@@ -92,7 +92,7 @@ Quick Look thumbnails and the Typst output was checked by rendered PNG pages.
 | Element | Reference Requirement | Typst Implementation | Status |
 | --- | --- | --- | --- |
 | References title | Heiti 16pt bold centered, single spacing, 24pt before, 18pt after | local reference heading rule in `references()` | Matched |
-| Reference body | Songti/TNR 10.5pt, hanging indent 2 chars, 16pt line height; adjacent entries use the same Word-style 16pt line rhythm | `size.wu`, `hanging-indent: 2em`, `compact-leading: 5.5pt`; reference paragraph/block spacing also uses `compact-leading` so paragraph boundaries keep the same 16pt baseline rhythm; supports `.bib` with `gb-7714-2015-numeric` | Matched |
+| Reference body | Songti/TNR 10.5pt, hanging indent 2 chars, 16pt line height; adjacent entries use the same Word-style 16pt line rhythm | `size.wu`, `hanging-indent: 2em`, `compact-leading: 5.5pt`; reference paragraph/block spacing also uses `compact-leading` so paragraph boundaries keep the same 16pt baseline rhythm; supports `.bib` through the local `gb7714-bilingual` engine, with 2025 selected by default | Matched |
 | Appendix body | same as main body | inherits global body settings | Matched |
 | Acknowledgements title | same as chapter title | level 1 heading rule | Matched |
 | Acknowledgements body | Fangsong 12pt, first-line indent 2 chars, 20pt line height | `fonts.fang`, `size.xiaosi`, body paragraph rhythm | Matched visually |
@@ -108,9 +108,10 @@ Quick Look thumbnails and the Typst output was checked by rendered PNG pages.
   `leading = line height - font size`; Word paragraph before/after `0pt` is
   implemented by keeping the same baseline rhythm across paragraph boundaries,
   so body `par.spacing` equals body `par.leading`.
-- The reference list can be generated from BibTeX/BibLaTeX through Typst
-  `bibliography(..., style: "gb-7714-2015-numeric")`, while the previous manual
-  `items` fallback remains available for small static lists.
+- The reference list is generated from BibTeX/BibLaTeX through the local
+  `gb7714-bilingual` engine; `metadata.typ` selects GB/T 7714—2025 by default,
+  while the previous manual `items` fallback remains available for small static
+  lists.
 - Typst automatically inserts CJK/Latin spacing in mixed Chinese-number text.
   It is disabled for thesis headings and the TOC so `第1章` matches the DOCX
   instead of rendering as `第 1 章`.
