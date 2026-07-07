@@ -56,7 +56,7 @@
   set heading(numbering: heading-numbering)
   show: el.default-enum-list
   show heading: i-figured.reset-counters
-  show math.equation.where(block: true): i-figured.show-equation
+  show math.equation.where(block: true): i-figured.show-equation.with(numbering: "(1-1)")
   set figure(gap: 6pt)
   show figure.where(kind: table): set figure(gap: 12pt)
   show figure.where(kind: table): set figure.caption(position: top)

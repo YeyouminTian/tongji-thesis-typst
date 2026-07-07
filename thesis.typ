@@ -49,23 +49,29 @@
   #table-of-contents()
 
   #symbols(entries: (
-    ("POI", "Point of Interest，兴趣点数据"),
-    ("MLLM", "Multimodal Large Language Model，多模态大语言模型"),
-    ("LU", "Land Use，用地功能"),
+    ($hat(y)$, "模型预测的类别"),
+    ($P(k|x)$, "给定输入 x 时类别 k 的条件概率"),
+    ($z_k$, "第 k 类对应的模型打分（logit）"),
+    ($bold(W)$, "网络权重矩阵"),
+    ($bold(x)$, "输入特征向量"),
+    ($epsilon$, "模型误差（噪声）项"),
+    ($op("ReLU")(dot)$, "修正线性激活函数"),
   ))
 ]
 
 #mainmatter[
   #include "chapters/chapter1.typ"
   #include "chapters/chapter2.typ"
+  #include "chapters/chapter3.typ"
+  #include "chapters/chapter4.typ"
 ]
 
 #backmatter[
   #references(bib: "references.bib")
 
-  #appendix[示例附录][
+  #appendix(label: <app:sample>)[示例附录][
     附录内容可放置调查问卷、补充图表、模型参数、额外实验结果或正文中过长的说明材料。附录中的图、
-    表和公式可按“图A1”“表A1”等方式编号。
+    表和公式可按“图A1”“表A1”等方式编号，正文通过 `@app:标签` 引用即自动显示为“附录A”。
   ]
 
   #acknowledgements[

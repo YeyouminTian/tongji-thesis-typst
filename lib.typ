@@ -1,6 +1,7 @@
 #import "vendor/gb7714-bilingual/lib.typ": multicite
 #import "utils/typography.typ": fonts, size, rhythm
 #import "utils/caption.typ": figure-caption, table-caption
+#import "utils/diagram.typ": palette, flow-node, flow-arrow, vflow, bar-chart, line-chart
 #import "layouts/document.typ": tongji-thesis
 #import "layouts/matter.typ": frontmatter, mainmatter, backmatter, chapter
 #import "layouts/declarations.typ": declaration-statements, originality-statement, copyright-authorization
