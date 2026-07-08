@@ -8,6 +8,10 @@
 
 ![同济大学研究生学位论文 Typst 模板预览](assets/readme-preview.png)
 
+### 协同编辑与实时预览
+
+![协同编辑与实时预览演示](assets/collaborative-editing-preview.gif)
+
 ## 功能特性
 
 - 中英文封面、书脊自动生成
