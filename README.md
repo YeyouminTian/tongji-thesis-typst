@@ -50,12 +50,6 @@ typst compile thesis.typ thesis.pdf
 ./scripts/compile-chapter.sh chapter1 chapter1.pdf
 ```
 
-### 全文预览入口
-
-```bash
-typst compile full-preview.typ full-preview.pdf
-```
-
 ## 使用方法
 
 ### 1. 填写论文信息
@@ -148,7 +142,6 @@ typst compile full-preview.typ full-preview.pdf
 ```
 ├── lib.typ                 # 公共 API — 所有模块导出入口
 ├── thesis.typ              # 全文编译入口
-├── full-preview.typ        # 全文预览入口
 ├── metadata.typ            # 论文元数据（标题、作者等）
 ├── references.bib          # 参考文献数据库
 ├── layouts/

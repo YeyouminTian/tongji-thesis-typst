@@ -25,12 +25,6 @@ typst compile thesis.typ thesis.pdf
 # The script creates a temporary entry point that includes only the specified chapter
 ```
 
-### Full Preview Entry Point
-```bash
-# Alternative entry for full preview
-typst compile full-preview.typ full-preview.pdf
-```
-
 ## Architecture Overview
 
 ### Module Hierarchy
@@ -59,7 +53,6 @@ lib.typ                 # Public API - all exports centralized here
 | File | Purpose |
 |------|---------|
 | `thesis.typ` | Full thesis compilation - assembles all chapters |
-| `full-preview.typ` | Simple wrapper that includes thesis.typ |
 | `preview/chapter1.typ` | Single-chapter preview example |
 | `tongji-thesis.typ` | Legacy compatibility facade (imports lib.typ) |
 
