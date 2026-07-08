@@ -8,6 +8,8 @@
 
 ![同济大学研究生学位论文 Typst 模板预览](assets/readme-preview.png)
 
+[查看完整 PDF 示例](assets/thesis-example.pdf)
+
 ### 协同编辑与实时预览
 
 ![协同编辑与实时预览演示](assets/collaborative-editing-preview.gif)
